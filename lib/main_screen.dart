@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_todo_app/many_todos_bloc/many_todos_bloc.dart';
+import 'package:flutter_todo_app/todo_repo.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const Column(
-        children: [
-          const TitleWidget(),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => (),
-        child: const Icon(Icons.add),
+    return BlocProvider<ManyTodosBloc>(
+      create: (_) => ManyTodosBloc(MockTodosRepo())..add(const ManyTodosLoaded()),
+      child: Scaffold(
+        body: const Column(
+          children: [
+            TitleWidget(),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => (),
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
@@ -48,19 +54,38 @@ class TitleWidget extends StatelessWidget {
                 ),
               ),
             ],
-          )
+          ),
+          const TaskListWidget(),
         ],
       ),
     );
   }
 }
 
-// class TaskListWidget extends StatelessWidget {
-//   const TaskListWidget({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return const ListView.builder(itemBuilder: itemBuilder);
-//   }
-// }
+class TaskListWidget extends StatelessWidget {
+  const TaskListWidget({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ManyTodosBloc, ManyTodosState>(
+      builder: (BuildContext context, ManyTodosState state) {
+        if (state is ManyTodosSuccess) {
+          // return Text('data');
+          return SizedBox(
+            height: 200,
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return CheckboxListTile(
+                  title: Text(state.todos[index].description),
+                  value: state.todos[index].isCompleted,
+                  onChanged: (_) => (),
+                );
+              },
+            ),
+          );
+        }
+        return const Placeholder();
+      },
+    );
+  }
+}
