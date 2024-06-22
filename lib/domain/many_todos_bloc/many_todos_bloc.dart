@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todo_app/todo_entity.dart';
-import 'package:flutter_todo_app/todo_repo.dart';
+import 'package:flutter_todo_app/data/todo_entity.dart';
+import 'package:flutter_todo_app/data/todo_repo.dart';
 
 part 'many_todo_event.dart';
 
@@ -27,7 +27,7 @@ class ManyTodosBloc extends Bloc<ManyTodosEvent, ManyTodosState> {
     await emit.forEach(
       _repo.getAllTodos(),
       onData: (todos) => ManyTodosSuccess(todos: todos, showCompleted: true),
-      // TODO(TrueFalseMaty): подумать над обработкой onError
+      // TODO(TrueFalseMary): подумать над обработкой onError
     );
   }
 
@@ -37,7 +37,9 @@ class ManyTodosBloc extends Bloc<ManyTodosEvent, ManyTodosState> {
       final selectedTodos = (state as ManyTodosSuccess)
           .todos
           .map((todo) => todo.id == event.todo.id
-              ? event.todo.copyWith(isCompleted: true)
+              ? todo.isCompleted
+                  ? event.todo.copyWith(isCompleted: false)
+                  : event.todo.copyWith(isCompleted: true)
               : todo)
           .toList();
       emit(ManyTodosSuccess(
