@@ -14,7 +14,7 @@
 
 ![img_1.png](readmi_images/img_1.png)
 
-[Ссылка на apk](build/app/outputs/apk/release/app-release.apk)
+[Ссылка на apk](readmi_images/app-release.apk)
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
