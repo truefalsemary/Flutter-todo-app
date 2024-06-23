@@ -207,7 +207,7 @@ class _TaskListWidget extends StatelessWidget {
 class _DismissibleTodoListTile extends StatelessWidget {
   const _DismissibleTodoListTile(this.todo);
 
-  final Todo todo;
+  final TodoEntity todo;
 
   @override
   Widget build(BuildContext context) {
@@ -235,7 +235,7 @@ class _DismissibleTodoListTile extends StatelessWidget {
 class _TodoListTile extends StatelessWidget {
   const _TodoListTile({required this.todo});
 
-  final Todo todo;
+  final TodoEntity todo;
 
   @override
   Widget build(BuildContext context) {

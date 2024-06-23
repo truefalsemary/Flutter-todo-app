@@ -14,7 +14,7 @@ final class ManyTodosLoaded extends ManyTodosEvent {
 final class ManyTodosCompleted extends ManyTodosEvent {
   const ManyTodosCompleted(this.todo);
 
-  final Todo todo;
+  final TodoEntity todo;
 
   @override
   List<Object?> get props => [todo];
@@ -24,7 +24,7 @@ final class ManyTodosCompleted extends ManyTodosEvent {
 final class ManyTodosDeleted extends ManyTodosEvent {
   const ManyTodosDeleted(this.todo);
 
-  final Todo todo;
+  final TodoEntity todo;
 
   @override
   List<Object?> get props => [todo];
@@ -42,7 +42,7 @@ final class ManyTodosFilter extends ManyTodosEvent {
 final class ManyTodosSaved extends ManyTodosEvent {
   const ManyTodosSaved(this.todo);
 
-  final Todo todo;
+  final TodoEntity todo;
 
   @override
   List<Object?> get props => [todo];

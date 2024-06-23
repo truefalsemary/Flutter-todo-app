@@ -6,11 +6,11 @@ import 'package:logging/logging.dart';
 class TodoNotifier extends ChangeNotifier {
   TodoNotifier({
     required int id,
-    Todo? todo,
+    TodoEntity? todo,
     TextEditingController? textEditingController,
     TextEditingController? dropdownController,
   })  : _id = id,
-        _todo = todo ?? Todo.empty(id),
+        _todo = todo ?? TodoEntity.empty(id),
         _textEditingController =
             textEditingController ?? TextEditingController(),
         _dropdownController = dropdownController ?? TextEditingController();
@@ -20,13 +20,13 @@ class TodoNotifier extends ChangeNotifier {
   // _priority = todo?.priority ?? Priority.no,
   // _deadline = todo?.deadline,
 
-  Todo _todo;
+  TodoEntity _todo;
   final int _id;
 
   final TextEditingController _textEditingController;
   final TextEditingController _dropdownController;
 
-  Todo get todo => _todo;
+  TodoEntity get todo => _todo;
 
   // DateTime? _deadline;
   // Priority _priority = Priority.no;

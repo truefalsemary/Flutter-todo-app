@@ -14,7 +14,7 @@ class TodoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final todo = ModalRoute.of(context)!.settings.arguments as Todo?;
+    final todo = ModalRoute.of(context)!.settings.arguments as TodoEntity?;
     final isNew = todo == null;
 
     return ChangeNotifierProvider<TodoNotifier>(

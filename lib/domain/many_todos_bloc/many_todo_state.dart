@@ -17,7 +17,7 @@ final class ManyTodosInProgress extends ManyTodosState {
 final class ManyTodosSuccess extends ManyTodosState {
   const ManyTodosSuccess({required this.todos, required this.showCompleted});
 
-  final List<Todo> todos;
+  final List<TodoEntity> todos;
   final bool showCompleted;
 
   @override
