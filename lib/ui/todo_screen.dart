@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/data/todo_entity.dart';
 import 'package:flutter_todo_app/domain/many_todos_bloc/many_todos_bloc.dart';
-import 'package:flutter_todo_app/domain/todo_bloc/one_todo_notifier.dart';
 import 'package:flutter_todo_app/ui/app_material_wrapper.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import '../domain/todo_notifier/one_todo_notifier.dart';
 
 class TodoScreen extends StatelessWidget {
   const TodoScreen({super.key});
@@ -27,6 +29,8 @@ class TodoScreen extends StatelessWidget {
       },
       child: Builder(builder: (context) {
         final readTodoNotifier = context.read<TodoNotifier>();
+        final watchTodoNotifier = context.watch<TodoNotifier>();
+
         return Scaffold(
             backgroundColor: Theme.of(context).colorScheme.surface,
             appBar: AppBar(
@@ -124,19 +128,21 @@ class TodoScreen extends StatelessWidget {
                               .read<TodoNotifier>()
                               .onChangePrority(priority),
                         ),
-                        // child: Text(context
-                        //     .watch<TodoNotifier>()
-                        //     .todo
-                        //     .priority
-                        //     .parseToString())),
-                        // Divider(color: Colors.grey.withOpacity(0.4)),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Сделать до',
-                              style: Theme.of(context).textTheme.bodyLarge,
+                            Column(
+                              children: [
+                                Text(
+                                  'Сделать до',
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                                Text(
+                                  formatDate(watchTodoNotifier.todo.deadline) ?? '',
+                                    style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+                                ),
+                              ],
                             ),
                             Switch(
                                 activeColor:
@@ -173,5 +179,12 @@ class TodoScreen extends StatelessWidget {
                   ));
       }),
     );
+  }
+
+  String? formatDate(DateTime? dateTime){
+    if (dateTime != null) {
+      DateFormat('yyyy-MM-dd').format(dateTime);
+    }
+    return null;
   }
 }
