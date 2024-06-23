@@ -38,3 +38,12 @@ final class ManyTodosFilter extends ManyTodosEvent {
   @override
   List<Object?> get props => [showCompleted];
 }
+
+final class ManyTodosSaved extends ManyTodosEvent {
+  const ManyTodosSaved(this.todo);
+
+  final Todo todo;
+
+  @override
+  List<Object?> get props => [todo];
+}

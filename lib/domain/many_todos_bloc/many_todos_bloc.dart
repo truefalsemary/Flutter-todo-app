@@ -17,6 +17,7 @@ class ManyTodosBloc extends Bloc<ManyTodosEvent, ManyTodosState> {
     on<ManyTodosCompleted>(_onCompleteManyTodos);
     on<ManyTodosDeleted>(_onDeleteManyTodos);
     on<ManyTodosFilter>(_onFilterManyTodos);
+    on<ManyTodosSaved>(_onSaveManyTodos);
   }
 
   final TodosRepo _repo;
@@ -74,6 +75,21 @@ class ManyTodosBloc extends Bloc<ManyTodosEvent, ManyTodosState> {
           showCompleted: event.showCompleted,
         ),
       );
+    }
+  }
+
+  FutureOr<void> _onSaveManyTodos(
+      ManyTodosSaved event, Emitter<ManyTodosState> emit) async {
+    if (state is ManyTodosSuccess) {
+      final newTodos = [...(state as ManyTodosSuccess).todos];
+      newTodos.add(event.todo);
+      emit(
+        ManyTodosSuccess(
+          todos: newTodos,
+          showCompleted:  (state as ManyTodosSuccess).showCompleted
+        ),
+      );
+      _repo.saveTodo(event.todo);
     }
   }
 }

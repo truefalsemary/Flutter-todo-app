@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,34 +8,30 @@ part 'one_todo_event.dart';
 
 part 'one_todo_state.dart';
 
-class OneTodoBloc extends Bloc<OneTodoEvent, OneTodoState> {
-  OneTodoBloc(TodosRepo repo)
+class OneTodoBloc extends Cubit<Todo> {
+  OneTodoBloc(TodosRepo repo, Todo todo)
       : _repo = repo,
-        super(OneTodoInitial()) {
-    on<OneTodoSaved>(_onSaveTodo);
-    on<OneTodoLoaded>(_onLoadExistingTodo);
-    on<OneTodoEmptyLoaded>(_onEmptyTodo);
-  }
+        super(todo);
 
   final TodosRepo _repo;
 
-  FutureOr<void> _onSaveTodo(OneTodoSaved event, Emitter<OneTodoState> emit) {
+  void changeTodo(OneTodoSaved event, Emitter<OneTodoState> emit) {
     emit(OneTodoInProgress());
-
     _repo.saveTodo(event.todo);
     emit(OneTodoSuccess(event.todo));
   }
 
-  /// Подгружает уже существующую заметку в состояние.
-  FutureOr<void> _onLoadExistingTodo(OneTodoLoaded event, Emitter<OneTodoState> emit) {
-    emit(OneTodoInProgress());
-    emit(OneTodoSuccess(event.todo));
-  }
-
-  /// Добавляет состояние пустой заметки.
-  /// Вызывается при создании новой заметки.
-  FutureOr<void> _onEmptyTodo(
-      OneTodoEmptyLoaded event, Emitter<OneTodoState> emit) {
-    emit(OneTodoEmpty());
-  }
+  // /// Подгружает уже существующую заметку в состояние.
+  // void loadExistingTodo(
+  //     OneTodoLoaded event, Emitter<OneTodoState> emit) {
+  //   emit(OneTodoInProgress());
+  //   emit(OneTodoSuccess(event.todo));
+  // }
+  //
+  // /// Добавляет состояние пустой заметки.
+  // /// Вызывается при создании новой заметки.
+  // void emptyTodo(
+  //     OneTodoEmptyLoaded event, Emitter<OneTodoState> emit) {
+  //   emit(OneTodoEmpty());
+  // }
 }
