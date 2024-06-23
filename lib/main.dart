@@ -49,6 +49,15 @@ class MyApp extends StatelessWidget {
 
           // TODO(TrueFalseMary): подумать как лучше сделать тему с учетом критических заметок
           checkboxTheme: const CheckboxThemeData(),
+
+          datePickerTheme: DatePickerThemeData(
+            cancelButtonStyle: TextButton.styleFrom(
+              foregroundColor: const Color(0xFF007AFF),
+            ),
+            confirmButtonStyle: TextButton.styleFrom(
+              foregroundColor: const Color(0xFF007AFF),
+            ),
+          ),
           iconTheme: const IconThemeData(color: Color(0x4D000000)),
           floatingActionButtonTheme: const FloatingActionButtonThemeData(
             backgroundColor: Color(0xFF007AFF),

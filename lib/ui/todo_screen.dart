@@ -15,10 +15,12 @@ class TodoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final todo = ModalRoute.of(context)!.settings.arguments as Todo?;
+    final isNew = todo == null;
 
     return ChangeNotifierProvider<TodoNotifier>(
       create: (_) {
         final manyState = context.read<ManyTodosBloc>().state;
+
         if (todo != null) {
           return TodoNotifier(id: todo.id, todo: todo);
         }
@@ -45,16 +47,13 @@ class TodoScreen extends StatelessWidget {
                     ),
                     onPressed: () {
                       final todo = context.read<TodoNotifier>().todo;
-                      return context
-                          .read<ManyTodosBloc>()
-                          .add(ManyTodosSaved(todo));
+                      context.read<ManyTodosBloc>().add(ManyTodosSaved(todo));
+                      Navigator.maybePop(context);
                     },
                     child: const Text('СОХРАНИТЬ'),
                   ),
                 ]),
-            body: todo == null
-                ? const Center(child: Text('Ничего нету :('))
-                : Padding(
+            body: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: ListView(
                       children: [
@@ -128,7 +127,7 @@ class TodoScreen extends StatelessWidget {
                               .read<TodoNotifier>()
                               .onChangePrority(priority),
                         ),
-
+                        const Divider(color: Colors.grey),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -139,8 +138,12 @@ class TodoScreen extends StatelessWidget {
                                   style: Theme.of(context).textTheme.bodyLarge,
                                 ),
                                 Text(
-                                  formatDate(watchTodoNotifier.todo.deadline) ?? '',
-                                    style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+                                  formatDate(watchTodoNotifier.todo.deadline) ??
+                                      '',
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  ),
                                 ),
                               ],
                             ),
@@ -153,9 +156,8 @@ class TodoScreen extends StatelessWidget {
                                         .deadline !=
                                     null,
                                 onChanged: (value) async {
-                                  if (value) {
-                                    return context
-                                        .read<TodoNotifier>()
+                                  if (!value) {
+                                    return readTodoNotifier
                                         .onChangeDeadline(null);
                                   } else {
                                     DateTime? pickedDate = await showDatePicker(
@@ -170,8 +172,33 @@ class TodoScreen extends StatelessWidget {
                                           .onChangeDeadline(pickedDate);
                                     }
                                   }
+                                  value = !value;
                                 }),
                           ],
+                        ),
+                        const SizedBox(height: 24),
+                        const Divider(color: Colors.grey),
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Visibility(
+                            visible: !isNew,
+                            child: TextButton.icon(
+                                onPressed: () {
+
+                                  context.read<ManyTodosBloc>().add(
+                                      ManyTodosDeleted(watchTodoNotifier.todo));
+                                  Navigator.maybePop(context);
+                                },
+                                label: Text(
+                                  'Удалить',
+                                  style: TextStyle(
+                                      color: Theme.of(context).colorScheme.error),
+                                ),
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: Theme.of(context).colorScheme.error,
+                                )),
+                          ),
                         ),
                         // DropdownButton(items: items, onChanged: onChanged),
                       ],
@@ -181,9 +208,9 @@ class TodoScreen extends StatelessWidget {
     );
   }
 
-  String? formatDate(DateTime? dateTime){
+  String? formatDate(DateTime? dateTime) {
     if (dateTime != null) {
-      DateFormat('yyyy-MM-dd').format(dateTime);
+      return DateFormat('dd MMMM yyyy').format(dateTime);
     }
     return null;
   }

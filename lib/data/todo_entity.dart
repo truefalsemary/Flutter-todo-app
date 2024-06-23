@@ -1,4 +1,6 @@
-class Todo {
+import 'package:equatable/equatable.dart';
+
+class Todo extends Equatable{
   const Todo({
     required this.id,
     required this.description,
@@ -26,12 +28,13 @@ class Todo {
     Priority? priority,
     DateTime? deadline,
     bool? isCompleted,
+    bool? forceNullDeadline,
   }) {
     return Todo(
       id: id,
       description: description ?? this.description,
       priority: priority ?? this.priority,
-      deadline: deadline ?? this.deadline,
+      deadline: (forceNullDeadline ?? false) ? null : deadline ?? this.deadline,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }
@@ -40,6 +43,9 @@ class Todo {
   String toString() {
     return 'Todo{id: $id, description: $description, priority: $priority, deadline: $deadline, isCompleted: $isCompleted}';
   }
+
+  @override
+  List<Object?> get props => [id];
 }
 
 enum Priority {
@@ -48,9 +54,8 @@ enum Priority {
   high,
 }
 
-
 extension PriorityExt on Priority {
-  parseToString(){
+  parseToString() {
     switch (this) {
       case Priority.no:
         return 'no';

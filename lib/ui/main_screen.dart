@@ -33,7 +33,10 @@ class MainScreen extends StatelessWidget {
             ],
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () => (),
+            onPressed: () => Navigator.pushNamed(
+              context,
+              TodoScreen.routeName,
+            ),
             child: const Icon(Icons.add),
           ),
         );
@@ -69,7 +72,6 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-
     if (overlapsContent || shrinkOffset > 0.5) {
       return SizedBox(
         height: 88,

@@ -1,5 +1,7 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_todo_app/data/todo_entity.dart';
+import 'package:logging/logging.dart';
 
 class TodoNotifier extends ChangeNotifier {
   TodoNotifier({
@@ -7,16 +9,16 @@ class TodoNotifier extends ChangeNotifier {
     Todo? todo,
     TextEditingController? textEditingController,
     TextEditingController? dropdownController,
-
   })  : _id = id,
         _todo = todo ?? Todo.empty(id),
         _textEditingController =
             textEditingController ?? TextEditingController(),
         _dropdownController = dropdownController ?? TextEditingController();
 
+  late final _logger = Logger('TodoNotifier');
+
   // _priority = todo?.priority ?? Priority.no,
   // _deadline = todo?.deadline,
-
 
   Todo _todo;
   final int _id;
@@ -25,6 +27,7 @@ class TodoNotifier extends ChangeNotifier {
   final TextEditingController _dropdownController;
 
   Todo get todo => _todo;
+
   // DateTime? _deadline;
   // Priority _priority = Priority.no;
 
@@ -35,12 +38,16 @@ class TodoNotifier extends ChangeNotifier {
   // Priority get priority => _priority;
 
   TextEditingController get textEditingController => _textEditingController;
+
   TextEditingController get dropdownController => _dropdownController;
 
-
   void onChangeDeadline(DateTime? newDeadline) {
-    // _deadline = newDeadline;
-    _todo = todo.copyWith(deadline: newDeadline);
+    _logger.fine('new deadline $newDeadline');
+    _todo = todo.copyWith(
+      forceNullDeadline: (newDeadline == null),
+      deadline: newDeadline,
+    );
+    _logger.fine('on change deadline to ${todo.deadline}');
     notifyListeners();
   }
 
@@ -49,7 +56,6 @@ class TodoNotifier extends ChangeNotifier {
       _todo = todo.copyWith(priority: newPriority);
       notifyListeners();
     }
-
   }
 
   void onChangeText(String value) {
@@ -58,7 +64,6 @@ class TodoNotifier extends ChangeNotifier {
     _todo = todo.copyWith(description: value);
     notifyListeners();
   }
-
 
   @override
   void dispose() {
