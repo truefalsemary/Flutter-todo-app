@@ -129,7 +129,7 @@ class TodoScreen extends StatelessWidget {
                         //     .todo
                         //     .priority
                         //     .parseToString())),
-                        Divider(color: Colors.grey.withOpacity(0.4)),
+                        // Divider(color: Colors.grey.withOpacity(0.4)),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,7 +139,8 @@ class TodoScreen extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             Switch(
-                              activeColor: Theme.of(context).colorScheme.secondary,
+                                activeColor:
+                                    Theme.of(context).colorScheme.secondary,
                                 value: context
                                         .watch<TodoNotifier>()
                                         .todo
