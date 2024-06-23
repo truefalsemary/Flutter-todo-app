@@ -2,14 +2,18 @@
 
 Тудушка
 
-## Getting Started
-
+## Changes maded
 
 <img src="readmi_images/img.png" alt="drawing" width="200"/>
 <img src="readmi_images/img_1.png" alt="drawing" width="200"/>
 <img src="readmi_images/img_2.png" alt="drawing" width="200"/>
-<img src="readmi_images/[img_2.png](https://github.com/truefalsemary/Flutter-todo-app/assets/94931275/578a0741-631d-463c-b1c0-dc93f2fcb3be)" alt="drawing" width="200"/>
+<img src="readmi_images/main_screen.png" alt="drawing" width="200"/>
 
+- Сверстаны два экрана основной и добавления/редактирования задачи
+- Реализован свайп по айтему
+- Показ выполненных дел
+- Добавлено логгирование в дата слой и немного в блок
+- На андроиде есть иконка
 
 
 [Ссылка на apk](readmi_images/app-release.apk)

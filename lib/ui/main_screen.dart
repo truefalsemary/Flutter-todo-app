@@ -213,8 +213,32 @@ class _DismissibleTodoListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: ValueKey<int>(todo.id),
-      background: Container(color: Colors.green),
-      secondaryBackground: Container(color: Colors.red),
+      background: ColoredBox(
+        color: Colors.green,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 24),
+            child: Icon(
+              Icons.check,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+        ),
+      ),
+      secondaryBackground: ColoredBox(
+        color: Colors.red,
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 24),
+            child: Icon(
+              Icons.delete,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+        ),
+      ),
       child: _TodoListTile(todo: todo),
       confirmDismiss: (DismissDirection direction) async {
         if (direction == DismissDirection.startToEnd) {
@@ -223,7 +247,7 @@ class _DismissibleTodoListTile extends StatelessWidget {
           return false;
         } else if (direction == DismissDirection.endToStart) {
           // Удаляем запись
-          context.read<ManyTodosBloc>().add(ManyTodosSaved(todo));
+          context.read<ManyTodosBloc>().add(ManyTodosDeleted(todo));
           return true;
         }
         return null;
