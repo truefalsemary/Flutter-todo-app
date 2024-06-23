@@ -20,7 +20,6 @@ final class ManyTodosCompleted extends ManyTodosEvent {
   List<Object?> get props => [todo];
 }
 
-
 final class ManyTodosDeleted extends ManyTodosEvent {
   const ManyTodosDeleted(this.todo);
 

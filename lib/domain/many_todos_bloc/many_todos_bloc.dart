@@ -81,13 +81,22 @@ class ManyTodosBloc extends Bloc<ManyTodosEvent, ManyTodosState> {
   FutureOr<void> _onSaveManyTodos(
       ManyTodosSaved event, Emitter<ManyTodosState> emit) async {
     if (state is ManyTodosSuccess) {
-      final newTodos = [...(state as ManyTodosSuccess).todos];
-      newTodos.add(event.todo);
+      final currentState = state as ManyTodosSuccess;
+
+      final index = currentState.todos
+          .indexWhere((element) => element.id == event.todo.id);
+
+      final newTodos = List<TodoEntity>.from(currentState.todos);
+
+      if (index != -1) {
+        newTodos[index] = event.todo;
+      } else {
+        newTodos.add(event.todo);
+      }
       emit(
         ManyTodosSuccess(
-          todos: newTodos,
-          showCompleted:  (state as ManyTodosSuccess).showCompleted
-        ),
+            todos: newTodos,
+            showCompleted: (state as ManyTodosSuccess).showCompleted),
       );
       _repo.saveTodo(event.todo);
     }

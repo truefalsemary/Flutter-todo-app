@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_todo_app/data/todo_entity.dart';
 import 'package:logging/logging.dart';
@@ -13,12 +12,11 @@ class TodoNotifier extends ChangeNotifier {
         _todo = todo ?? TodoEntity.empty(id),
         _textEditingController =
             textEditingController ?? TextEditingController(),
-        _dropdownController = dropdownController ?? TextEditingController();
+        _dropdownController = dropdownController ?? TextEditingController() {
+    _textEditingController.text = _todo.description;
+  }
 
   late final _logger = Logger('TodoNotifier');
-
-  // _priority = todo?.priority ?? Priority.no,
-  // _deadline = todo?.deadline,
 
   TodoEntity _todo;
   final int _id;
@@ -28,14 +26,7 @@ class TodoNotifier extends ChangeNotifier {
 
   TodoEntity get todo => _todo;
 
-  // DateTime? _deadline;
-  // Priority _priority = Priority.no;
-
   int get id => _id;
-
-  // DateTime? get deadline => _deadline;
-  //
-  // Priority get priority => _priority;
 
   TextEditingController get textEditingController => _textEditingController;
 
