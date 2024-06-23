@@ -10,9 +10,9 @@
 
 ![img_2.png](readmi_images/img_2.png)
 
-![img.png](img.png)
+![img.png](readmi_images/img.png)
 
-![img_1.png](img_1.png)
+![img_1.png](readmi_images/img_1.png)
 
 [Ссылка на apk](build/app/outputs/apk/release/app-release.apk)
 
