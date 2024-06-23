@@ -4,15 +4,13 @@
 
 ## Getting Started
 
-![img.png](readmi_images/img.png)
 
-![img_1.png](readmi_images/img_1.png)
+<img src="readmi_images/img.png" alt="drawing" width="200"/>
+<img src="readmi_images/img_1.png" alt="drawing" width="200"/>
+<img src="readmi_images/img_2.png" alt="drawing" width="200"/>
+<img src="readmi_images/[img_2.png](https://github.com/truefalsemary/Flutter-todo-app/assets/94931275/578a0741-631d-463c-b1c0-dc93f2fcb3be)" alt="drawing" width="200"/>
 
-![img_2.png](readmi_images/img_2.png)
 
-![img.png](readmi_images/img.png)
-
-![img_1.png](readmi_images/img_1.png)
 
 [Ссылка на apk](readmi_images/app-release.apk)
 
