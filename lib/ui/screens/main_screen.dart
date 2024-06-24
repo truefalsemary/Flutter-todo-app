@@ -6,6 +6,7 @@ import 'package:flutter_todo_app/ui/components/app_material_wrapper.dart';
 
 import '../../domain/many_tasks_bloc/many_tasks_bloc.dart';
 import 'task_screen.dart';
+import 'dart:math' as math;
 
 part '../components/many_tasks/main_screen_appbar.dart';
 
@@ -30,8 +31,9 @@ class MainScreen extends StatelessWidget {
             SliverPersistentHeader(
               pinned: true,
               delegate: _MainScreenSliverPersistentHeaderDelegate(
-                minExtent: 130.0,
-                maxExtent: 148.0,
+                topPadding: MediaQuery.of(context).padding.top,
+                minExtent: 68.0,
+                maxExtent: 140.0,
                 state: state,
               ),
             ),
