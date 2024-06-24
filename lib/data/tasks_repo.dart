@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter_todo_app/data/todo_entity.dart';
+import 'package:flutter_todo_app/data/task_entity.dart';
 import 'package:logging/logging.dart';
 
-abstract class TodosRepo {
+abstract class TasksRepo {
   FutureOr<void> addTodo(TodoEntity todo);
 
   FutureOr<void> saveTodo(TodoEntity todo);
@@ -13,12 +13,12 @@ abstract class TodosRepo {
   FutureOr<bool> deleteTodo(int id);
 }
 
-class MockTodosRepo extends TodosRepo {
-  static final MockTodosRepo _internalSingleton = MockTodosRepo._internal();
+class MockTasksRepo extends TasksRepo {
+  static final MockTasksRepo _internalSingleton = MockTasksRepo._internal();
 
-  factory MockTodosRepo() => _internalSingleton;
+  factory MockTasksRepo() => _internalSingleton;
 
-  MockTodosRepo._internal();
+  MockTasksRepo._internal();
 
   late final _logger = Logger('MockTodosRepo');
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todo_app/ui/main_screen.dart';
-import 'package:flutter_todo_app/ui/todo_screen.dart';
+import 'package:flutter_todo_app/ui/screens/main_screen.dart';
+import 'package:flutter_todo_app/ui/screens/task_screen.dart';
 import 'package:logging/logging.dart';
 
-import 'data/todo_repo.dart';
-import 'domain/many_todos_bloc/many_todos_bloc.dart';
+import 'data/tasks_repo.dart';
+import 'domain/many_tasks_bloc/many_tasks_bloc.dart';
 
 void main() {
   Logger.root.level = Level.ALL;
@@ -21,14 +21,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ManyTodosBloc>(
+    return BlocProvider<ManyTasksBloc>(
       create: (_) =>
-          ManyTodosBloc(MockTodosRepo())..add(const ManyTodosLoaded()),
+          ManyTasksBloc(MockTasksRepo())..add(const ManyTasksLoaded()),
       child: MaterialApp(
         initialRoute: MainScreen.routeName,
         routes: {
           MainScreen.routeName: (context) => const MainScreen(),
-          TodoScreen.routeName: (context) => const TodoScreen(),
+          TaskScreen.routeName: (context) => const TaskScreen(),
         },
         title: 'Flutter Demo',
         theme: ThemeData(

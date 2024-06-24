@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_todo_app/data/todo_entity.dart';
+import 'package:flutter_todo_app/data/task_entity.dart';
 import 'package:logging/logging.dart';
 
-class TodoNotifier extends ChangeNotifier {
-  TodoNotifier({
+class OneTaskNotifier extends ChangeNotifier {
+  OneTaskNotifier({
     required int id,
     TodoEntity? todo,
     TextEditingController? textEditingController,
@@ -42,7 +42,7 @@ class TodoNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onChangePrority(Priority? newPriority) {
+  void onChangePriority(Priority? newPriority) {
     if (newPriority != null) {
       _todo = todo.copyWith(priority: newPriority);
       notifyListeners();
