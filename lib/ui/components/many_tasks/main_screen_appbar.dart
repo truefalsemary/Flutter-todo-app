@@ -34,12 +34,17 @@ class _MainScreenSliverPersistentHeaderDelegate
       alignment: Alignment.bottomCenter,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: context.appColors.backPrimary,
           boxShadow: [
             BoxShadow(
-              offset: const Offset(0, 4),
-              color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.4),
+              offset: const Offset(0, 1),
+              color: context.appColors.supportOverlay.withOpacity(0.2),
               blurRadius: 10,
+            ),
+            BoxShadow(
+              offset: const Offset(0, 4),
+              color: context.appColors.supportOverlay.withOpacity(0.12),
+              blurRadius: 5,
             )
           ],
         ),
@@ -51,7 +56,7 @@ class _MainScreenSliverPersistentHeaderDelegate
                 left: 60 - 44 * shrinkCoef,
                 child: Text(
                   'Мои дела',
-                  style: Theme.of(context).textTheme.headlineLarge,
+                  style: AppFonts.h1,
                 ),
               ),
               if (shrinkOffset < maxExtent - minExtent)
@@ -72,17 +77,17 @@ class _MainScreenSliverPersistentHeaderDelegate
     );
   }
 
-  double _countCoeff(double shrinkOffset) {
-    return math.min(shrinkOffset, maxExtent - minExtent) /
-        (maxExtent - minExtent);
-  }
-
   @override
   bool shouldRebuild(
       covariant _MainScreenSliverPersistentHeaderDelegate oldDelegate) {
     return oldDelegate.minExtent != minExtent ||
         oldDelegate.maxExtent != maxExtent ||
         oldDelegate.state != state;
+  }
+
+  double _countCoeff(double shrinkOffset) {
+    return math.min(shrinkOffset, maxExtent - minExtent) /
+        (maxExtent - minExtent);
   }
 
   Widget _buildIconButton(BuildContext context) {
@@ -94,7 +99,7 @@ class _MainScreenSliverPersistentHeaderDelegate
         (state as ManyTasksSuccess).showCompleted
             ? Icons.visibility_off
             : Icons.visibility,
-        color: Theme.of(context).colorScheme.secondary,
+        color: context.appColors.colorBlue,
       ),
     );
   }
@@ -102,7 +107,8 @@ class _MainScreenSliverPersistentHeaderDelegate
   Widget _buildTasksCount(BuildContext context) {
     return Text(
       'Выполнено — ${(state as ManyTasksSuccess).todos.where((todo) => todo.isCompleted).length}',
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: AppFonts.b2
+          .copyWith(color: context.appColors.labelTertiary.withOpacity(0.3)),
     );
   }
 }

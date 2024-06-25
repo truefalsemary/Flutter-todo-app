@@ -7,15 +7,22 @@ class _DescriptionTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.rectangle,
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.primary,
-              blurRadius: 2,
-            ),
-          ]),
+        color: context.appColors.backSecondary,
+        shape: BoxShape.rectangle,
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset.zero,
+            color: context.appColors.supportOverlay.withOpacity(0.06),
+            blurRadius: 2,
+          ),
+          BoxShadow(
+            offset: const Offset(0, 2),
+            color: context.appColors.supportOverlay.withOpacity(0.12),
+            blurRadius: 2,
+          )
+        ],
+      ),
       child: TextField(
         minLines: 5,
         onChanged: context.read<OneTaskNotifier>().onChangeText,
@@ -23,16 +30,13 @@ class _DescriptionTextField extends StatelessWidget {
         decoration: InputDecoration(
           border: const OutlineInputBorder(
             borderSide: BorderSide(style: BorderStyle.none),
-            borderRadius: BorderRadius.all(
-              Radius.circular(8),
-              // Radius.zero,
-            ),
           ),
           hintText: 'Что надо сделать...',
-          constraints: const BoxConstraints(
-            minHeight: 104,
+          hintStyle: AppFonts.b2.copyWith(
+            color: context.appColors.labelTertiary,
           ),
-          fillColor: Theme.of(context).colorScheme.onSecondary,
+          constraints: const BoxConstraints(minHeight: 104),
+          // fillColor: context.appColors.backSecondary,
         ),
         keyboardType: TextInputType.multiline,
         maxLines: null,

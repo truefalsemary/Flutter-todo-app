@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_todo_app/ui/common/app_colors.dart';
 import 'package:flutter_todo_app/ui/screens/main_screen.dart';
 import 'package:flutter_todo_app/ui/screens/task_screen.dart';
 import 'package:logging/logging.dart';
@@ -31,40 +32,58 @@ class MyApp extends StatelessWidget {
           TaskScreen.routeName: (context) => const TaskScreen(),
         },
         title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: const ColorScheme(
-            brightness: Brightness.light,
-            primary: Color(0xFFF7F6F2),
-            onPrimary: Color(0xFF000000),
-            // secondary: Color(0xFFFFFFFF),
-            // onSecondary: Color(0x99000000),
-            secondary: Color(0xFF007AFF),
-            onSecondary: Color(0xFFFFFFFF),
-            tertiary: Color(0x4D000000),
-            error: Color(0xFFFF3B30),
-            onError: Color(0xFFFFFFFF),
-            surface: Color(0xFFF7F6F2),
-            onSurface: Color(0xFF000000),
-          ),
-
+        theme: ThemeData.light(useMaterial3: true).copyWith(
           // TODO(TrueFalseMary): подумать как лучше сделать тему с учетом критических заметок
           checkboxTheme: const CheckboxThemeData(),
-
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: AppColors.lightColorBlue,
+            selectionHandleColor: AppColors.lightColorBlue,
+          ),
           datePickerTheme: DatePickerThemeData(
             cancelButtonStyle: TextButton.styleFrom(
-              foregroundColor: const Color(0xFF007AFF),
+              foregroundColor: AppColors.lightColorBlue,
             ),
             confirmButtonStyle: TextButton.styleFrom(
-              foregroundColor: const Color(0xFF007AFF),
+              foregroundColor: AppColors.lightColorBlue,
             ),
+            backgroundColor: AppColors.lightBackPrimary,
+            dayStyle: const TextStyle(color: Colors.white),
+            dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
+                return AppColors
+                    .lightColorBlue; // Change background color of selected day
+              }
+              return Colors
+                  .transparent; // Background color of non-selected days
+            }),
+            todayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
+                return AppColors
+                    .lightColorBlue; // Change background color of selected day
+              }
+              return Colors
+                  .transparent; // Background color of non-selected days
+            }),
+            todayBorder: const BorderSide(color: AppColors.lightColorBlue),
           ),
-          iconTheme: const IconThemeData(color: Color(0x4D000000)),
+          iconTheme: const IconThemeData(color: AppColors.lightLabelTertiary),
           floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            backgroundColor: Color(0xFF007AFF),
-            foregroundColor: Color(0xFFFFFFFF),
+            backgroundColor: AppColors.lightColorBlue,
+            foregroundColor: AppColors.lightBackPrimary,
             shape: CircleBorder(),
           ),
-          useMaterial3: true,
+          inputDecorationTheme: const InputDecorationTheme(
+            labelStyle: TextStyle(color: AppColors.lightLabelPrimary),
+            // isCollapsed: true,
+
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.lightSupportSeparator),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.lightSupportSeparator),
+            ),
+          ),
+          extensions: <ThemeExtension>[AppColorsTheme.light()],
         ),
       ),
     );

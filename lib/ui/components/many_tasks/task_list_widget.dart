@@ -13,10 +13,22 @@ class _TaskListWidget extends StatelessWidget {
       return SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           sliver: DecoratedSliver(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset.zero,
+                  color: context.appColors.supportOverlay.withOpacity(0.06),
+                  blurRadius: 2,
+                ),
+                BoxShadow(
+                  offset: const Offset(0, 2),
+                  color: context.appColors.supportOverlay.withOpacity(0.12),
+                  blurRadius: 2,
+                )
+              ],
             ),
             sliver: SliverPadding(
               padding: const EdgeInsets.only(top: 4),

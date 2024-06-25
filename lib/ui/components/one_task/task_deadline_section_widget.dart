@@ -13,18 +13,16 @@ class _DeadlineSection extends StatelessWidget {
           children: [
             Text(
               'Сделать до',
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: AppFonts.b2,
             ),
             Text(
               formatDate(context.watch<OneTaskNotifier>().todo.deadline) ?? '',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+              style: TextStyle(color: context.appColors.colorBlue),
             ),
           ],
         ),
         Switch(
-            activeColor: Theme.of(context).colorScheme.secondary,
+            activeColor: context.appColors.colorBlue,
             value: context.watch<OneTaskNotifier>().todo.deadline != null,
             onChanged: (value) async {
               if (!value) {
@@ -77,11 +75,11 @@ class _DeleteSection extends StatelessWidget {
             },
             label: Text(
               'Удалить',
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
+              style: TextStyle(color: context.appColors.colorRed),
             ),
             icon: Icon(
               Icons.delete,
-              color: Theme.of(context).colorScheme.error,
+              color: context.appColors.colorRed,
             )),
       ),
     );

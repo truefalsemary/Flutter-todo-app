@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_app/ui/common/app_colors.dart';
 
 class AppCheckbox extends StatelessWidget {
   const AppCheckbox({
@@ -17,30 +18,26 @@ class AppCheckbox extends StatelessWidget {
     return Checkbox(
       value: value,
       onChanged: onChanged,
-      activeColor: Colors.red,
       side: BorderSide(
         color: isCritical
-            ? Theme.of(context).colorScheme.error
-            : Theme.of(context)
-                .colorScheme
-                .tertiary, // Customize the border color here
-        width: 2.0, // Adjust the border width if needed
+            ? context.appColors.colorRed
+            : context.appColors.supportSeparator,
+        width: 2.0,
       ),
-      checkColor: Theme.of(context).colorScheme.primary,
+      checkColor: context.appColors.backPrimary,
       fillColor: WidgetStateProperty.resolveWith<Color>((states) {
         if (states.contains(WidgetState.selected)) {
           return isCritical
-              ? Theme.of(context).colorScheme.error
-              // TODO(TrueFalseMary): вынести в тему
-              : const Color(0xFF34C759);
+              ? context.appColors.colorRed
+              : context.appColors.colorGreen;
         }
         if (states.contains(WidgetState.disabled)) {
-          return Theme.of(context).colorScheme.tertiary;
+          return context.appColors.labelTertiary;
         }
 
         return isCritical
-            ? Theme.of(context).colorScheme.error.withOpacity(0.4)
-            : Theme.of(context).colorScheme.primary;
+            ? context.appColors.colorRed.withOpacity(0.4)
+            : context.appColors.colorWhite;
       }),
     );
   }

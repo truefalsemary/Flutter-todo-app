@@ -51,10 +51,8 @@ class TodoEntity extends Equatable {
 enum Priority {
   no,
   low,
-  high,
-}
+  high;
 
-extension PriorityExt on Priority {
   parseToString() {
     switch (this) {
       case Priority.no:

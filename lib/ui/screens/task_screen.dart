@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/data/task_entity.dart';
+import 'package:flutter_todo_app/ui/common/app_colors.dart';
+import 'package:flutter_todo_app/ui/common/app_fonts.dart';
 import 'package:flutter_todo_app/ui/components/app_material_wrapper.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -37,8 +39,9 @@ class TaskScreen extends StatelessWidget {
       },
       child: Builder(builder: (context) {
         return Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.surface,
+            backgroundColor: context.appColors.backPrimary,
             appBar: AppBar(
+                backgroundColor: context.appColors.backPrimary,
                 leading: AppMaterialWrapper(
                     child: IconButton(
                         onPressed: () => Navigator.maybePop(context),
@@ -46,7 +49,7 @@ class TaskScreen extends StatelessWidget {
                 actions: [
                   TextButton(
                     style: TextButton.styleFrom(
-                      foregroundColor: Theme.of(context).colorScheme.secondary,
+                      foregroundColor: context.appColors.colorBlue,
                     ),
                     onPressed: () {
                       final todo = context.read<OneTaskNotifier>().todo;
@@ -63,10 +66,10 @@ class TaskScreen extends StatelessWidget {
                   const _DescriptionTextField(),
                   const SizedBox(height: 28),
                   const _PrioritySection(),
-                  const Divider(color: Colors.grey),
+                  Divider(color: context.appColors.supportSeparator),
                   const _DeadlineSection(),
                   const SizedBox(height: 24),
-                  const Divider(color: Colors.grey),
+                  Divider(color: context.appColors.supportSeparator),
                   _DeleteSection(isNew: isNew),
                 ],
               ),

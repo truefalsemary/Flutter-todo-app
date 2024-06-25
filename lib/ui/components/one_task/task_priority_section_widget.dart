@@ -8,21 +8,19 @@ class _PrioritySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Важность',
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
+        Text('Важность', style: AppFonts.b2),
         DropdownButton<Priority>(
+          dropdownColor: context.appColors.backPrimary,
           iconSize: 0.0,
           value: context.watch<OneTaskNotifier>().todo.priority,
           items:
-          Priority.values.map<DropdownMenuItem<Priority>>((Priority value) {
+              Priority.values.map<DropdownMenuItem<Priority>>((Priority value) {
             if (value == Priority.high) {
               return DropdownMenuItem<Priority>(
                 value: value,
                 child: Text(
                   value.parseToString(),
-                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                  style: TextStyle(color: context.appColors.colorRed),
                 ),
               );
             }

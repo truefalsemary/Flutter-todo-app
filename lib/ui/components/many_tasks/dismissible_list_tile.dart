@@ -10,27 +10,27 @@ class _DismissibleTodoListTile extends StatelessWidget {
     return Dismissible(
       key: ValueKey<int>(todo.id),
       background: ColoredBox(
-        color: Colors.green,
+        color: context.appColors.colorGreen,
         child: Align(
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: const EdgeInsets.only(left: 24),
             child: Icon(
               Icons.check,
-              color: Theme.of(context).colorScheme.primary,
+              color: context.appColors.backPrimary,
             ),
           ),
         ),
       ),
       secondaryBackground: ColoredBox(
-        color: Colors.red,
+        color: context.appColors.colorRed,
         child: Align(
           alignment: Alignment.centerRight,
           child: Padding(
             padding: const EdgeInsets.only(right: 24),
             child: Icon(
               Icons.delete,
-              color: Theme.of(context).colorScheme.primary,
+              color: context.appColors.backPrimary,
             ),
           ),
         ),
@@ -86,9 +86,7 @@ class _TodoListTile extends StatelessWidget {
                   ? TextDecoration.lineThrough
                   : TextDecoration.none,
               decorationColor: todo.isCompleted
-                  ? Theme.of(context)
-                      .colorScheme
-                      .tertiary // Change this to your desired line color
+                  ? context.appColors.labelTertiary
                   : Colors.transparent,
             ),
           )),
