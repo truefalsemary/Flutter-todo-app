@@ -8,7 +8,7 @@ class _PrioritySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Важность', style: AppFonts.b2),
+        const Text('Важность', style: AppFonts.b2),
         DropdownButton<Priority>(
           dropdownColor: context.appColors.backPrimary,
           iconSize: 0.0,

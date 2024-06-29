@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-class TodoEntity extends Equatable {
-  const TodoEntity({
+class TaskEntity extends Equatable {
+  const TaskEntity({
     required this.id,
     required this.description,
     required this.priority,
@@ -15,22 +15,22 @@ class TodoEntity extends Equatable {
   final DateTime? deadline;
   final bool isCompleted;
 
-  factory TodoEntity.empty(int id) {
-    return TodoEntity(
+  factory TaskEntity.empty(int id) {
+    return TaskEntity(
       id: id,
       description: '',
       priority: Priority.low,
     );
   }
 
-  TodoEntity copyWith({
+  TaskEntity copyWith({
     String? description,
     Priority? priority,
     DateTime? deadline,
     bool? isCompleted,
     bool? forceNullDeadline,
   }) {
-    return TodoEntity(
+    return TaskEntity(
       id: id,
       description: description ?? this.description,
       priority: priority ?? this.priority,

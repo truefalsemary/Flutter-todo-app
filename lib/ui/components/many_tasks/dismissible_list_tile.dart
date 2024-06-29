@@ -3,7 +3,7 @@ part of '../../screens/main_screen.dart';
 class _DismissibleTodoListTile extends StatelessWidget {
   const _DismissibleTodoListTile(this.todo);
 
-  final TodoEntity todo;
+  final TaskEntity todo;
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +39,11 @@ class _DismissibleTodoListTile extends StatelessWidget {
       confirmDismiss: (DismissDirection direction) async {
         if (direction == DismissDirection.startToEnd) {
           // Меняем состояние `isCompleted` класса Todo
-          context.read<ManyTasksBloc>().add(ManyTasksCompleted(todo));
+          context.read<TasksBloc>().add(SwitchTaskCompletition(todo));
           return false;
         } else if (direction == DismissDirection.endToStart) {
           // Удаляем запись
-          context.read<ManyTasksBloc>().add(ManyTasksDeleted(todo));
+          context.read<TasksBloc>().add(OneTaskDeleted(todo));
           return true;
         }
         return null;
@@ -55,7 +55,7 @@ class _DismissibleTodoListTile extends StatelessWidget {
 class _TodoListTile extends StatelessWidget {
   const _TodoListTile({required this.todo});
 
-  final TodoEntity todo;
+  final TaskEntity todo;
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +72,8 @@ class _TodoListTile extends StatelessWidget {
             child: AppCheckbox(
               value: todo.isCompleted,
               isCritical: todo.priority == Priority.high,
-              onChanged: (value) => context.read<ManyTasksBloc>().add(
-                    ManyTasksCompleted(todo),
+              onChanged: (value) => context.read<TasksBloc>().add(
+                    SwitchTaskCompletition(todo),
                   ),
             ),
           ),
@@ -95,7 +95,7 @@ class _TodoListTile extends StatelessWidget {
               padding: EdgeInsets.zero,
               onPressed: () => Navigator.pushNamed(
                 context,
-                TaskScreen.routeName,
+                TaskScreenWrapper.routeName,
                 arguments: todo,
               ),
               icon: const Icon(Icons.info_outlined),

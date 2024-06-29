@@ -5,11 +5,11 @@ import 'package:logging/logging.dart';
 class OneTaskNotifier extends ChangeNotifier {
   OneTaskNotifier({
     required int id,
-    TodoEntity? todo,
+    TaskEntity? todo,
     TextEditingController? textEditingController,
     TextEditingController? dropdownController,
   })  : _id = id,
-        _todo = todo ?? TodoEntity.empty(id),
+        _todo = todo ?? TaskEntity.empty(id),
         _textEditingController =
             textEditingController ?? TextEditingController(),
         _dropdownController = dropdownController ?? TextEditingController() {
@@ -18,13 +18,13 @@ class OneTaskNotifier extends ChangeNotifier {
 
   late final _logger = Logger('TodoNotifier');
 
-  TodoEntity _todo;
+  TaskEntity _todo;
   final int _id;
 
   final TextEditingController _textEditingController;
   final TextEditingController _dropdownController;
 
-  TodoEntity get todo => _todo;
+  TaskEntity get todo => _todo;
 
   int get id => _id;
 

@@ -3,12 +3,12 @@ part of '../../screens/main_screen.dart';
 class _TaskListWidget extends StatelessWidget {
   const _TaskListWidget(this.state);
 
-  final ManyTasksState state;
+  final AllTasksState state;
 
   @override
   Widget build(BuildContext context) {
-    if (state is ManyTasksSuccess) {
-      final successState = state as ManyTasksSuccess;
+    if (state is TasksSuccess) {
+      final successState = state as TasksSuccess;
 
       return SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -35,8 +35,8 @@ class _TaskListWidget extends StatelessWidget {
               sliver: Builder(
                 builder: (context) {
                   final filteredTodos = successState.showCompleted
-                      ? successState.todos
-                      : successState.todos.where((todo) => !todo.isCompleted);
+                      ? successState.tasks
+                      : successState.tasks.where((todo) => !todo.isCompleted);
                   return SliverList.builder(
                     itemCount: filteredTodos.length,
                     itemBuilder: (context, index) => _DismissibleTodoListTile(

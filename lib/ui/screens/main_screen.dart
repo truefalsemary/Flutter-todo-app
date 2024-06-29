@@ -6,7 +6,7 @@ import 'package:flutter_todo_app/ui/common/app_fonts.dart';
 import 'package:flutter_todo_app/ui/components/many_tasks/app_checkbox.dart';
 import 'package:flutter_todo_app/ui/components/app_material_wrapper.dart';
 
-import '../../domain/many_tasks_bloc/many_tasks_bloc.dart';
+import '../../domain/tasks_bloc/tasks_bloc.dart';
 import 'task_screen.dart';
 import 'dart:math' as math;
 
@@ -23,8 +23,8 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ManyTasksBloc, ManyTasksState>(
-        builder: (BuildContext context, ManyTasksState state) {
+    return BlocBuilder<TasksBloc, AllTasksState>(
+        builder: (BuildContext context, AllTasksState state) {
       return Scaffold(
         backgroundColor: context.appColors.backPrimary,
         body: CustomScrollView(
@@ -44,7 +44,7 @@ class MainScreen extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () => Navigator.pushNamed(
             context,
-            TaskScreen.routeName,
+            TaskScreenWrapper.routeName,
           ),
           child: const Icon(Icons.add),
         ),

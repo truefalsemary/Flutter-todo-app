@@ -15,7 +15,7 @@ class _MainScreenSliverPersistentHeaderDelegate
 
   final double topPadding;
 
-  final ManyTasksState state;
+  final AllTasksState state;
 
   @override
   double get minExtent => _minExtent + topPadding;
@@ -54,7 +54,7 @@ class _MainScreenSliverPersistentHeaderDelegate
               Positioned(
                 bottom: 44 - 28 * shrinkCoef,
                 left: 60 - 44 * shrinkCoef,
-                child: Text(
+                child: const Text(
                   'Мои дела',
                   style: AppFonts.h1,
                 ),
@@ -93,10 +93,10 @@ class _MainScreenSliverPersistentHeaderDelegate
   Widget _buildIconButton(BuildContext context) {
     return InkWell(
       onTap: () => context
-          .read<ManyTasksBloc>()
-          .add(ManyTasksFilter(!(state as ManyTasksSuccess).showCompleted)),
+          .read<TasksBloc>()
+          .add(AllTasksFilter(!(state as TasksSuccess).showCompleted)),
       child: Icon(
-        (state as ManyTasksSuccess).showCompleted
+        (state as TasksSuccess).showCompleted
             ? Icons.visibility_off
             : Icons.visibility,
         color: context.appColors.colorBlue,
@@ -106,7 +106,7 @@ class _MainScreenSliverPersistentHeaderDelegate
 
   Widget _buildTasksCount(BuildContext context) {
     return Text(
-      'Выполнено — ${(state as ManyTasksSuccess).todos.where((todo) => todo.isCompleted).length}',
+      'Выполнено — ${(state as TasksSuccess).tasks.where((todo) => todo.isCompleted).length}',
       style: AppFonts.b2
           .copyWith(color: context.appColors.labelTertiary.withOpacity(0.3)),
     );
