@@ -20,12 +20,12 @@ class _TaskListWidget extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   offset: Offset.zero,
-                  color: context.appColors.supportOverlay.withOpacity(0.06),
+                  color: context.appColorsTheme.supportOverlay.withOpacity(0.06),
                   blurRadius: 2,
                 ),
                 BoxShadow(
                   offset: const Offset(0, 2),
-                  color: context.appColors.supportOverlay.withOpacity(0.12),
+                  color: context.appColorsTheme.supportOverlay.withOpacity(0.12),
                   blurRadius: 2,
                 )
               ],
@@ -35,8 +35,8 @@ class _TaskListWidget extends StatelessWidget {
               sliver: Builder(
                 builder: (context) {
                   final filteredTodos = successState.showCompleted
-                      ? successState.tasks
-                      : successState.tasks.where((todo) => !todo.isCompleted);
+                      ? successState.cachedTasks
+                      : successState.cachedTasks.where((todo) => !todo.isCompleted);
                   return SliverList.builder(
                     itemCount: filteredTodos.length,
                     itemBuilder: (context, index) => _DismissibleTodoListTile(

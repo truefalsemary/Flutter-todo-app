@@ -33,7 +33,7 @@ class TaskScreenWrapper extends StatelessWidget {
           return OneTaskNotifier(id: todo.id, todo: todo);
         }
         if (manyState is TasksSuccess) {
-          return OneTaskNotifier(id: manyState.tasks.length);
+          return OneTaskNotifier(id: manyState.cachedTasks.length);
         }
         return OneTaskNotifier(id: 0);
       },
@@ -57,9 +57,9 @@ class _TaskScreenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: context.appColors.backPrimary,
+        backgroundColor: context.appColorsTheme.backPrimary,
         appBar: AppBar(
-            backgroundColor: context.appColors.backPrimary,
+            backgroundColor: context.appColorsTheme.backPrimary,
             leading: AppMaterialWrapper(
                 child: IconButton(
                     onPressed: () => Navigator.maybePop(context),
@@ -67,7 +67,7 @@ class _TaskScreenBody extends StatelessWidget {
             actions: [
               TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: context.appColors.colorBlue,
+                  foregroundColor: context.appColorsTheme.colorBlue,
                 ),
                 onPressed: () => _saveTask(context),
                 child: const Text('СОХРАНИТЬ'),
@@ -80,10 +80,10 @@ class _TaskScreenBody extends StatelessWidget {
               const _DescriptionTextField(),
               const SizedBox(height: 28),
               const _PrioritySection(),
-              Divider(color: context.appColors.supportSeparator),
+              Divider(color: context.appColorsTheme.supportSeparator),
               const _DeadlineSection(),
               const SizedBox(height: 24),
-              Divider(color: context.appColors.supportSeparator),
+              Divider(color: context.appColorsTheme.supportSeparator),
               _DeleteSection(isNew: isNew),
             ],
           ),

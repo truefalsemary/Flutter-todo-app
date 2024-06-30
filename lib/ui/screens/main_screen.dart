@@ -26,7 +26,7 @@ class MainScreen extends StatelessWidget {
     return BlocBuilder<TasksBloc, AllTasksState>(
         builder: (BuildContext context, AllTasksState state) {
       return Scaffold(
-        backgroundColor: context.appColors.backPrimary,
+        backgroundColor: context.appColorsTheme.backPrimary,
         body: CustomScrollView(
           slivers: [
             SliverPersistentHeader(

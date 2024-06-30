@@ -19,12 +19,12 @@ class _DeadlineSection extends StatelessWidget {
               DateFormatters.formatDate(
                       context.watch<OneTaskNotifier>().todo.deadline) ??
                   '',
-              style: TextStyle(color: context.appColors.colorBlue),
+              style: TextStyle(color: context.appColorsTheme.colorBlue),
             ),
           ],
         ),
         Switch(
-            activeColor: context.appColors.colorBlue,
+            activeColor: context.appColorsTheme.colorBlue,
             value: context.watch<OneTaskNotifier>().todo.deadline != null,
             onChanged: (value) async {
               if (!value) {
@@ -73,11 +73,11 @@ class _DeleteSection extends StatelessWidget {
             onPressed: () => _deleteTask(context),
             label: Text(
               'Удалить',
-              style: TextStyle(color: context.appColors.colorRed),
+              style: TextStyle(color: context.appColorsTheme.colorRed),
             ),
             icon: Icon(
               Icons.delete,
-              color: context.appColors.colorRed,
+              color: context.appColorsTheme.colorRed,
             )),
       ),
     );

@@ -10,7 +10,7 @@ class _PrioritySection extends StatelessWidget {
       children: [
         const Text('Важность', style: AppFonts.b2),
         DropdownButton<Priority>(
-          dropdownColor: context.appColors.backPrimary,
+          dropdownColor: context.appColorsTheme.backPrimary,
           iconSize: 0.0,
           value: context.watch<OneTaskNotifier>().todo.priority,
           items:
@@ -20,7 +20,7 @@ class _PrioritySection extends StatelessWidget {
                 value: value,
                 child: Text(
                   value.parseToString(),
-                  style: TextStyle(color: context.appColors.colorRed),
+                  style: TextStyle(color: context.appColorsTheme.colorRed),
                 ),
               );
             }

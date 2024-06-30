@@ -7,18 +7,18 @@ class _DescriptionTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: context.appColors.backSecondary,
+        color: context.appColorsTheme.backSecondary,
         shape: BoxShape.rectangle,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         boxShadow: [
           BoxShadow(
             offset: Offset.zero,
-            color: context.appColors.supportOverlay.withOpacity(0.06),
+            color: context.appColorsTheme.supportOverlay.withOpacity(0.06),
             blurRadius: 2,
           ),
           BoxShadow(
             offset: const Offset(0, 2),
-            color: context.appColors.supportOverlay.withOpacity(0.12),
+            color: context.appColorsTheme.supportOverlay.withOpacity(0.12),
             blurRadius: 2,
           )
         ],
@@ -33,10 +33,10 @@ class _DescriptionTextField extends StatelessWidget {
           ),
           hintText: 'Что надо сделать...',
           hintStyle: AppFonts.b2.copyWith(
-            color: context.appColors.labelTertiary,
+            color: context.appColorsTheme.labelTertiary,
           ),
           constraints: const BoxConstraints(minHeight: 104),
-          // fillColor: context.appColors.backSecondary,
+          // fillColor: context.appColorsTheme.backSecondary,
         ),
         keyboardType: TextInputType.multiline,
         maxLines: null,
