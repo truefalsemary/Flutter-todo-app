@@ -86,7 +86,7 @@ class _DeleteSection extends StatelessWidget {
   void _deleteTask(BuildContext context) {
     context
         .read<TasksBloc>()
-        .add(OneTaskDeleted(context.read<OneTaskNotifier>().todo));
+        .add(OneTaskDeleted(context.read<OneTaskNotifier>().todo.id));
     Navigator.maybePop(context);
   }
 }

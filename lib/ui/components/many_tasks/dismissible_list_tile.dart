@@ -3,12 +3,12 @@ part of '../../screens/main_screen.dart';
 class _DismissibleTodoListTile extends StatelessWidget {
   const _DismissibleTodoListTile(this.todo);
 
-  final TaskEntity todo;
+  final Task todo;
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: ValueKey<int>(todo.id),
+      key: ValueKey<String>(todo.id),
       background: ColoredBox(
         color: context.appColorsTheme.colorGreen,
         child: Align(
@@ -39,11 +39,11 @@ class _DismissibleTodoListTile extends StatelessWidget {
       confirmDismiss: (DismissDirection direction) async {
         if (direction == DismissDirection.startToEnd) {
           // Меняем состояние `isCompleted` класса Todo
-          context.read<TasksBloc>().add(SwitchTaskCompletition(todo));
+          context.read<TasksBloc>().add(SwitchTaskCompletition(todo.id));
           return false;
         } else if (direction == DismissDirection.endToStart) {
           // Удаляем запись
-          context.read<TasksBloc>().add(OneTaskDeleted(todo));
+          context.read<TasksBloc>().add(OneTaskDeleted(todo.id));
           return true;
         }
         return null;
@@ -55,7 +55,7 @@ class _DismissibleTodoListTile extends StatelessWidget {
 class _TodoListTile extends StatelessWidget {
   const _TodoListTile({required this.todo});
 
-  final TaskEntity todo;
+  final Task todo;
 
   @override
   Widget build(BuildContext context) {
@@ -70,22 +70,21 @@ class _TodoListTile extends StatelessWidget {
         children: [
           AppMaterialWrapper(
             child: AppCheckbox(
-              value: todo.isCompleted,
-              isCritical: todo.priority == Priority.high,
+              value: todo.done,
+              isCritical: todo.importance == Importance.important,
               onChanged: (value) => context.read<TasksBloc>().add(
-                    SwitchTaskCompletition(todo),
+                    SwitchTaskCompletition(todo.id),
                   ),
             ),
           ),
           const SizedBox(width: 12),
           Expanded(
               child: Text(
-            todo.description,
+            todo.text,
             style: TextStyle(
-              decoration: todo.isCompleted
-                  ? TextDecoration.lineThrough
-                  : TextDecoration.none,
-              decorationColor: todo.isCompleted
+              decoration:
+                  todo.done ? TextDecoration.lineThrough : TextDecoration.none,
+              decorationColor: todo.done
                   ? context.appColorsTheme.labelTertiary
                   : Colors.transparent,
             ),

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todo_app/data/task_entity.dart';
+import 'package:flutter_todo_app/data/importance_enum.dart';
 import 'package:flutter_todo_app/ui/common/app_colors.dart';
 import 'package:flutter_todo_app/ui/common/app_fonts.dart';
 import 'package:flutter_todo_app/ui/components/many_tasks/app_checkbox.dart';
 import 'package:flutter_todo_app/ui/components/app_material_wrapper.dart';
 
+import '../../data/task.dart';
+import '../../data/task_entity.dart';
 import '../../domain/tasks_bloc/tasks_bloc.dart';
 import 'task_screen.dart';
 import 'dart:math' as math;

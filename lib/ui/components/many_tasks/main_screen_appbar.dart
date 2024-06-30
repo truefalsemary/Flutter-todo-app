@@ -92,23 +92,25 @@ class _MainScreenSliverPersistentHeaderDelegate
 
   Widget _buildIconButton(BuildContext context) {
     return InkWell(
-      onTap: () => context
-          .read<TasksBloc>()
-          .add(AllTasksFilter(!(state as TasksSuccess).showCompleted)),
+      onTap: () {
+        context.read<TasksBloc>().add(const AllTasksFilter());
+      },
       child: Icon(
-        (state as TasksSuccess).showCompleted
-            ? Icons.visibility_off
-            : Icons.visibility,
+        state.showCompleted ? Icons.visibility_off : Icons.visibility,
         color: context.appColorsTheme.colorBlue,
       ),
     );
   }
 
   Widget _buildTasksCount(BuildContext context) {
-    return Text(
-      'Выполнено — ${(state as TasksSuccess).cachedTasks.where((todo) => todo.isCompleted).length}',
-      style: AppFonts.b2
-          .copyWith(color: context.appColorsTheme.labelTertiary.withOpacity(0.3)),
-    );
+    final tasks = state.cachedTasks;
+    if (tasks != null) {
+      return Text(
+        'Выполнено — ${tasks.where((todo) => todo.done).length}',
+        style: AppFonts.b2.copyWith(
+            color: context.appColorsTheme.labelTertiary.withOpacity(0.3)),
+      );
+    }
+    return const SizedBox.shrink();
   }
 }

@@ -15,33 +15,44 @@
 
 part of 'tasks_bloc.dart';
 
-sealed class AllTasksState extends Equatable {
-  const AllTasksState();
-}
+// sealed class AllTasksState extends Equatable {
+//   const AllTasksState();
+// }
+//
+// final class TasksInitial extends AllTasksState {
+//   const TasksInitial();
+//
+//   @override
+//   List<Object?> get props => [];
+// }
+//
+// final class TasksInProgress extends AllTasksState {
+//   @override
+//   List<Object?> get props => [];
+// }
 
-final class TasksInitial extends AllTasksState {
-  const TasksInitial();
-
-  @override
-  List<Object?> get props => [];
-}
-
-final class TasksInProgress extends AllTasksState {
-  @override
-  List<Object?> get props => [];
-}
-
-final class TasksSuccess extends AllTasksState {
-  const TasksSuccess({
-    required this.cachedTasks,
-    required this.showCompleted,
-     this.revision,
+final class AllTasksState {
+  const AllTasksState({
+    this.cachedTasks,
+    this.showCompleted = true,
+    this.revision,
   });
 
-  final List<TaskEntity> cachedTasks;
+  final List<TaskEntity>? cachedTasks;
   final bool showCompleted;
   final int? revision;
 
-  @override
+  AllTasksState copyWith({
+    List<TaskEntity>? cachedTasks,
+    bool? showCompleted,
+    int? revision,
+  }) {
+    return AllTasksState(
+      cachedTasks: cachedTasks ?? this.cachedTasks,
+      showCompleted: showCompleted ?? this.showCompleted,
+      revision: revision ?? this.revision,
+    );
+  }
+
   List<Object?> get props => [cachedTasks, showCompleted, revision];
 }

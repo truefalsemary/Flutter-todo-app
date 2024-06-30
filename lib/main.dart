@@ -4,18 +4,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todo_app/ui/common/app_colors.dart';
 import 'package:flutter_todo_app/ui/screens/main_screen.dart';
 import 'package:flutter_todo_app/ui/screens/task_screen.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:logging/logging.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'data/tasks_repo.dart';
 import 'domain/tasks_bloc/tasks_bloc.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   Logger.root.level = kDebugMode ? Level.ALL : Level.OFF;
   Logger.root.onRecord.listen((record) {
     if (kDebugMode) {
       print('${record.loggerName}: ${record.level.name}:  ${record.message}');
     }
   });
+
+  final appDir = await getApplicationDocumentsDirectory();
+  final storage = await HydratedStorage.build(
+    storageDirectory: appDir,
+  );
+  HydratedBloc.storage = storage;
 
   runApp(const MyApp());
 }

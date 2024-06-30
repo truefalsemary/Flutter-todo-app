@@ -9,14 +9,14 @@ class _PrioritySection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('Важность', style: AppFonts.b2),
-        DropdownButton<Priority>(
+        DropdownButton<Importance>(
           dropdownColor: context.appColorsTheme.backPrimary,
           iconSize: 0.0,
-          value: context.watch<OneTaskNotifier>().todo.priority,
-          items:
-              Priority.values.map<DropdownMenuItem<Priority>>((Priority value) {
-            if (value == Priority.high) {
-              return DropdownMenuItem<Priority>(
+          value: context.watch<OneTaskNotifier>().todo.importance,
+          items: Importance.values
+              .map<DropdownMenuItem<Importance>>((Importance value) {
+            if (value == Importance.important) {
+              return DropdownMenuItem<Importance>(
                 value: value,
                 child: Text(
                   value.parseToString(),
@@ -24,7 +24,7 @@ class _PrioritySection extends StatelessWidget {
                 ),
               );
             }
-            return DropdownMenuItem<Priority>(
+            return DropdownMenuItem<Importance>(
               value: value,
               child: Text(value.parseToString()),
             );

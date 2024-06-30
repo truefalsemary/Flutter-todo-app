@@ -6,6 +6,7 @@ import 'package:flutter_todo_app/ui/components/app_material_wrapper.dart';
 import 'package:flutter_todo_app/utils/date_formatters.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/importance_enum.dart';
 import '../../domain/task_notifier/task_notifier.dart';
 import '../../domain/tasks_bloc/tasks_bloc.dart';
 
@@ -27,15 +28,10 @@ class TaskScreenWrapper extends StatelessWidget {
 
     return ChangeNotifierProvider<OneTaskNotifier>(
       create: (_) {
-        final manyState = context.read<TasksBloc>().state;
-
         if (todo != null) {
-          return OneTaskNotifier(id: todo.id, todo: todo);
+          return OneTaskNotifier(todo: todo.toTask());
         }
-        if (manyState is TasksSuccess) {
-          return OneTaskNotifier(id: manyState.cachedTasks.length);
-        }
-        return OneTaskNotifier(id: 0);
+        return OneTaskNotifier();
       },
       child: _TaskScreenBody(
         taskEntity: todo,

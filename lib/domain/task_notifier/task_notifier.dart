@@ -1,32 +1,30 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_todo_app/data/task_entity.dart';
+import 'package:flutter_todo_app/data/importance_enum.dart';
+import 'package:flutter_todo_app/data/task.dart';
 import 'package:logging/logging.dart';
 
 class OneTaskNotifier extends ChangeNotifier {
   OneTaskNotifier({
-    required int id,
-    TaskEntity? todo,
+    Task? todo,
     TextEditingController? textEditingController,
     TextEditingController? dropdownController,
-  })  : _id = id,
-        _todo = todo ?? TaskEntity.empty(id),
+  })  : _todo = todo ?? Task.empty(),
         _textEditingController =
             textEditingController ?? TextEditingController(),
         _dropdownController = dropdownController ?? TextEditingController() {
-    _textEditingController.text = _todo.description;
+    _textEditingController.text = _todo.text;
   }
 
   late final _logger = Logger('TodoNotifier');
 
-  TaskEntity _todo;
-  final int _id;
+  Task _todo;
 
   final TextEditingController _textEditingController;
   final TextEditingController _dropdownController;
 
-  TaskEntity get todo => _todo;
+  Task get todo => _todo;
 
-  int get id => _id;
+  String get id => todo.id;
 
   TextEditingController get textEditingController => _textEditingController;
 
@@ -42,7 +40,7 @@ class OneTaskNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onChangePriority(Priority? newPriority) {
+  void onChangePriority(Importance? newPriority) {
     if (newPriority != null) {
       _todo = todo.copyWith(priority: newPriority);
       notifyListeners();

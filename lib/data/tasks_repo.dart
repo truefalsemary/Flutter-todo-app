@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter_todo_app/data/task_entity.dart';
 import 'package:logging/logging.dart';
 
+import 'importance_enum.dart';
+
 abstract class TasksRepo {
   FutureOr<void> addTodo(TaskEntity todo);
 
@@ -10,7 +12,7 @@ abstract class TasksRepo {
 
   Stream<List<TaskEntity>> getAllTodos();
 
-  FutureOr<bool> deleteTodo(int id);
+  FutureOr<bool> deleteTodo(String id);
 }
 
 class MockTasksRepo extends TasksRepo {
@@ -29,7 +31,7 @@ class MockTasksRepo extends TasksRepo {
   }
 
   @override
-  bool deleteTodo(int id) {
+  bool deleteTodo(String id) {
     todos = todos.where((todo) => todo.id != id).toList();
     _logger.fine('delete todo $id');
     return true;
@@ -52,146 +54,158 @@ class MockTasksRepo extends TasksRepo {
     }
   }
 
-  List<TaskEntity> todos = <TaskEntity>[
-    TaskEntity(
-      id: 1,
-      description: 'Buy groceries' * 10,
-      priority: Priority.high,
-      deadline: DateTime(2024, 6, 20),
-      isCompleted: false,
+  List<TaskEntity> todos = List.generate(
+    20,
+    (int idx) => TaskEntity(
+      id: idx.toString(),
+      text: 'text: $idx',
+      importance:
+          (idx.isEven ? Importance.important : Importance.low).parseToString(),
+      createdAt: DateTime.now(),
+      changedAt: DateTime.now(),
+      lastUpdatedBy: 'macbook',
     ),
-    TaskEntity(
-      id: 2,
-      description: 'Finish the project report',
-      priority: Priority.high,
-      deadline: DateTime(2024, 6, 21),
-      isCompleted: false,
-    ),
-    TaskEntity(
-      id: 3,
-      description: 'Schedule dentist appointment',
-      priority: Priority.low,
-      deadline: DateTime(2024, 6, 25),
-      isCompleted: false,
-    ),
-    const TaskEntity(
-      id: 4,
-      description: 'Clean the house',
-      priority: Priority.no,
-      deadline: null,
-      isCompleted: false,
-    ),
-    TaskEntity(
-      id: 5,
-      description: 'Reply to emails',
-      priority: Priority.low,
-      deadline: DateTime(2024, 6, 19),
-      isCompleted: true,
-    ),
-    TaskEntity(
-      id: 6,
-      description: 'Prepare for meeting',
-      priority: Priority.high,
-      deadline: DateTime(2024, 6, 22),
-      isCompleted: false,
-    ),
-    TaskEntity(
-      id: 7,
-      description: 'Renew gym membership',
-      priority: Priority.low,
-      deadline: DateTime(2024, 6, 30),
-      isCompleted: false,
-    ),
-    const TaskEntity(
-      id: 8,
-      description: 'Call the bank',
-      priority: Priority.no,
-      deadline: null,
-      isCompleted: false,
-    ),
-    const TaskEntity(
-      id: 9,
-      description: 'Read the new book',
-      priority: Priority.low,
-      deadline: null,
-      isCompleted: false,
-    ),
-    TaskEntity(
-      id: 10,
-      description: 'Plan the weekend trip',
-      priority: Priority.high,
-      deadline: DateTime(2024, 6, 28),
-      isCompleted: false,
-    ),
-    TaskEntity(
-      id: 11,
-      description: 'Find the Marauder’s Map',
-      priority: Priority.high,
-      deadline: DateTime(2024, 6, 20),
-      isCompleted: false,
-    ),
-    TaskEntity(
-      id: 12,
-      description: 'Brew a Polyjuice Potion',
-      priority: Priority.high,
-      deadline: DateTime(2024, 6, 21),
-      isCompleted: false,
-    ),
-    TaskEntity(
-      id: 13,
-      description: 'Attend a Quidditch match',
-      priority: Priority.low,
-      deadline: DateTime(2024, 6, 25),
-      isCompleted: false,
-    ),
-    const TaskEntity(
-      id: 14,
-      description: 'Visit Honeydukes for magical sweets',
-      priority: Priority.no,
-      deadline: null,
-      isCompleted: false,
-    ),
-    TaskEntity(
-      id: 15,
-      description: 'Help Dobby with his sock dilemma',
-      priority: Priority.low,
-      deadline: DateTime(2024, 6, 19),
-      isCompleted: true,
-    ),
-    TaskEntity(
-      id: 16,
-      description: 'Defeat a Boggart',
-      priority: Priority.high,
-      deadline: DateTime(2024, 6, 22),
-      isCompleted: false,
-    ),
-    TaskEntity(
-      id: 17,
-      description: 'Learn to cast a Patronus charm',
-      priority: Priority.low,
-      deadline: DateTime(2024, 6, 30),
-      isCompleted: false,
-    ),
-    const TaskEntity(
-      id: 18,
-      description: 'Find the Chamber of Secrets',
-      priority: Priority.no,
-      deadline: null,
-      isCompleted: false,
-    ),
-    const TaskEntity(
-      id: 19,
-      description: 'Study at Hogwarts library',
-      priority: Priority.low,
-      deadline: null,
-      isCompleted: false,
-    ),
-    TaskEntity(
-      id: 20,
-      description: 'Rescue a Hungarian Horntail dragon',
-      priority: Priority.high,
-      deadline: DateTime(2024, 6, 28),
-      isCompleted: false,
-    ),
-  ];
+  );
+// <Task>[
+//   Task(
+//     id: '1',
+//     text: 'Buy groceries' * 10,
+//     importance: Importance.important,
+//     deadline: DateTime(2024, 6, 20),
+//     done: false,
+//   ),
+//   Task(
+//     id: '2',
+//     text: 'Finish the project report',
+//     importance: Importance.important,
+//     deadline: DateTime(2024, 6, 21),
+//     done: false,
+//   ),
+//   Task(
+//     id: '3',
+//     text: 'Schedule dentist appointment',
+//     importance: Importance.basic,
+//     deadline: DateTime(2024, 6, 25),
+//     done: false,
+//   ),
+//   const Task(
+//     id: '4',
+//     text: 'Clean the house',
+//     importance: Importance.basic,
+//     deadline: null,
+//     done: false,
+//   ),
+//   Task(
+//     id: '5',
+//     text: 'Reply to emails',
+//     importance: Importance.basic,
+//     deadline: DateTime(2024, 6, 19),
+//     done: true,
+//   ),
+//   Task(
+//     id: '6',
+//     text: 'Prepare for meeting',
+//     importance: Importance.important,
+//     deadline: DateTime(2024, 6, 22),
+//     done: false,
+//   ),
+//   Task(
+//     id: '7',
+//     text: 'Renew gym membership',
+//     importance: Importance.basic,
+//     deadline: DateTime(2024, 6, 30),
+//     done: false,
+//   ),
+//   const Task(
+//     id: '8',
+//     text: 'Call the bank',
+//     importance: Importance.basic,
+//     deadline: null,
+//     done: false,
+//   ),
+//   const Task(
+//     id: '9',
+//     text: 'Read the new book',
+//     importance: Importance.basic,
+//     deadline: null,
+//     done: false,
+//   ),
+//   Task(
+//     id: '10',
+//     text: 'Plan the weekend trip',
+//     importance: Importance.important,
+//     deadline: DateTime(2024, 6, 28),
+//     done: false,
+//   ),
+//   Task(
+//     id: '11',
+//     text: 'Find the Marauder’s Map',
+//     importance: Importance.important,
+//     deadline: DateTime(2024, 6, 20),
+//     done: false,
+//   ),
+//   Task(
+//     id: '12',
+//     text: 'Brew a Polyjuice Potion',
+//     importance: Importance.important,
+//     deadline: DateTime(2024, 6, 21),
+//     done: false,
+//   ),
+//   Task(
+//     id: '13',
+//     text: 'Attend a Quidditch match',
+//     importance: Importance.basic,
+//     deadline: DateTime(2024, 6, 25),
+//     done: false,
+//   ),
+//   const Task(
+//     id: '14',
+//     text: 'Visit Honeydukes for magical sweets',
+//     importance: Importance.basic,
+//     deadline: null,
+//     done: false,
+//   ),
+//   Task(
+//     id: '15',
+//     text: 'Help Dobby with his sock dilemma',
+//     importance: Importance.basic,
+//     deadline: DateTime(2024, 6, 19),
+//     done: true,
+//   ),
+//   Task(
+//     id: '16',
+//     text: 'Defeat a Boggart',
+//     importance: Importance.important,
+//     deadline: DateTime(2024, 6, 22),
+//     done: false,
+//   ),
+//   Task(
+//     id: '17',
+//     text: 'Learn to cast a Patronus charm',
+//     importance: Importance.basic,
+//     deadline: DateTime(2024, 6, 30),
+//     done: false,
+//   ),
+//   const Task(
+//     id: '18',
+//     text: 'Find the Chamber of Secrets',
+//     importance: Importance.basic,
+//     deadline: null,
+//     done: false,
+//   ),
+//   const Task(
+//     id: '19',
+//     text: 'Study at Hogwarts library',
+//     importance: Importance.basic,
+//     deadline: null,
+//     done: false,
+//   ),
+//   Task(
+//     id: '20',
+//     text: 'Rescue a Hungarian Horntail dragon',
+//     importance: Importance.important,
+//     deadline: DateTime(2024, 6, 28),
+//     done: false,
+//   ),
+// ];
 }
