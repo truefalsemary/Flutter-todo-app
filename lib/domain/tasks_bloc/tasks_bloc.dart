@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_todo_app/data/task_entity.dart';
-import 'package:flutter_todo_app/data/tasks_repo.dart';
+import 'package:flutter_todo_app/data/repo/tasks_repo.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:logging/logging.dart';
 
@@ -29,10 +29,13 @@ class TasksBloc extends HydratedBloc<ManyTasksEvent, AllTasksState> {
 
   Future<void> _onLoadTasks(
       AllTasksLoaded event, Emitter<AllTasksState> emit) async {
-    await emit.forEach(
-      _repo.getAllTodos(),
-      onData: (todos) => AllTasksState(cachedTasks: todos, showCompleted: true),
-      // TODO(TrueFalseMary): подумать над обработкой onError
+    final result = await _repo.getAllTodos();
+    emit(
+      AllTasksState(
+        revision: result.revision ?? state.revision,
+        cachedTasks: result.tasks,
+        showCompleted: true,
+      ),
     );
     _logger.fine(() => '_onLoadTasks');
   }
@@ -42,12 +45,17 @@ class TasksBloc extends HydratedBloc<ManyTasksEvent, AllTasksState> {
     final selectedTodos = state.cachedTasks
         ?.map((todo) => todo.id == event.id
             ? todo.done
-                ? todo.copyWith(isCompleted: false)
-                : todo.copyWith(isCompleted: true)
+                ? todo.copyWith(done: false)
+                : todo.copyWith(done: true)
             : todo)
         .toList();
     if (selectedTodos != null) {
-      _repo.saveTodo(selectedTodos.firstWhere((todo) => todo.id == event.id));
+      _repo.updateTodo(
+        revision: state.revision,
+        todo: selectedTodos.firstWhere(
+          (todo) => todo.id == event.id,
+        ),
+      );
       emit(
         state.copyWith(cachedTasks: selectedTodos),
       );
@@ -102,7 +110,7 @@ class TasksBloc extends HydratedBloc<ManyTasksEvent, AllTasksState> {
       }
 
       emit(state.copyWith(cachedTasks: newTodos));
-      _repo.saveTodo(newTask);
+      _repo.addTodo(todo: newTask, revision: state.revision);
       _logger.fine(() => '_onSaveOneTask: ${event.task}');
     }
   }

@@ -8,7 +8,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'data/tasks_repo.dart';
+import 'data/repo/mock_repo.dart';
 import 'domain/tasks_bloc/tasks_bloc.dart';
 
 void main() async {
