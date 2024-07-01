@@ -4,6 +4,8 @@ import 'package:flutter_todo_app/data/importance_enum.dart';
 import 'package:flutter_todo_app/data/task.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import '../utils/json_converters.dart';
+
 part 'task_entity.g.dart';
 
 @JsonSerializable()
@@ -22,22 +24,27 @@ class TaskEntity extends Equatable {
 
   final String id;
   final String text;
-  final String importance;
+
+  @ImportanceConverter()
+  final Importance importance;
 
   @ColorJsonConverter()
   final Color? color;
 
   @EpochDateTimeConverter()
+  @JsonKey(name: 'created_at')
+  final DateTime createdAt;
+
+  @EpochDateTimeConverter()
+  @JsonKey(name: 'changed_at')
+  final DateTime changedAt;
+
+  @EpochDateTimeNullConverter()
   final DateTime? deadline;
 
   final bool done;
 
-  @EpochDateTimeConverter()
-  final DateTime createdAt;
-
-  @EpochDateTimeConverter()
-  final DateTime changedAt;
-
+  @JsonKey(name: 'last_updated_by')
   final String lastUpdatedBy;
 
   factory TaskEntity.fromTask(
@@ -49,7 +56,7 @@ class TaskEntity extends Equatable {
       TaskEntity(
         id: task.id,
         text: task.text,
-        importance: task.importance.parseToString(),
+        importance: task.importance,
         deadline: task.deadline,
         done: task.done,
         createdAt: createdAt,
@@ -77,16 +84,16 @@ class TaskEntity extends Equatable {
   Task toTask() => Task(
         id: id,
         text: text,
-        importance: Importance.fromString(importance),
+        importance: importance,
         deadline: deadline,
         done: done,
       );
 
   TaskEntity copyWith({
-    String? description,
-    String? priority,
+    String? text,
+    Importance? importance,
     DateTime? deadline,
-    bool? isCompleted,
+    bool? done,
     bool? forceNullDeadline,
     DateTime? createdAt,
     DateTime? changedAt,
@@ -94,10 +101,10 @@ class TaskEntity extends Equatable {
   }) {
     return TaskEntity(
       id: id,
-      text: description ?? text,
-      importance: priority ?? importance,
-      deadline: (forceNullDeadline ?? false) ? null : deadline ?? deadline,
-      done: isCompleted ?? done,
+      text: text ?? this.text,
+      importance: importance ?? this.importance,
+      deadline: (forceNullDeadline ?? false) ? null : deadline ?? this.deadline,
+      done: done ?? this.done,
       createdAt: createdAt ?? this.createdAt,
       changedAt: changedAt ?? this.changedAt,
       lastUpdatedBy: lastUpdatedBy ?? this.lastUpdatedBy,
@@ -106,37 +113,6 @@ class TaskEntity extends Equatable {
 
   @override
   String toString() {
-    return 'Todo{id: $id, description: $text, priority: $importance, deadline: $deadline, isCompleted: $done}';
+    return 'TaskEntity{id: $id, description: $text, priority: $importance, deadline: $deadline, isCompleted: $done}';
   }
-}
-
-class ColorJsonConverter implements JsonConverter<Color?, String> {
-  const ColorJsonConverter();
-
-  @override
-  Color? fromJson(String json) {
-    return hexToColor(json);
-  }
-
-  @override
-  String toJson(Color? color) {
-    return color == null ? '' : '#${color.value.toRadixString(16)}';
-  }
-
-  Color? hexToColor(String code) {
-    return code == ''
-        ? null
-        : Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
-  }
-}
-
-class EpochDateTimeConverter implements JsonConverter<DateTime?, int?> {
-  const EpochDateTimeConverter();
-
-  @override
-  DateTime? fromJson(int? json) =>
-      json == null ? null : DateTime.fromMillisecondsSinceEpoch(json);
-
-  @override
-  int? toJson(DateTime? object) => object?.millisecondsSinceEpoch;
 }

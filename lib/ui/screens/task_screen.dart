@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_app/data/task_entity.dart';
+import 'package:flutter_todo_app/data/task.dart';
 import 'package:flutter_todo_app/ui/common/app_colors.dart';
 import 'package:flutter_todo_app/ui/common/app_fonts.dart';
 import 'package:flutter_todo_app/ui/components/app_material_wrapper.dart';
@@ -23,18 +23,18 @@ class TaskScreenWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final todo = ModalRoute.of(context)!.settings.arguments as TaskEntity?;
+    final todo = ModalRoute.of(context)!.settings.arguments as Task?;
     final isNew = todo == null;
 
     return ChangeNotifierProvider<OneTaskNotifier>(
       create: (_) {
         if (todo != null) {
-          return OneTaskNotifier(todo: todo.toTask());
+          return OneTaskNotifier(todo: todo);
         }
         return OneTaskNotifier();
       },
       child: _TaskScreenBody(
-        taskEntity: todo,
+        task: todo,
         isNew: isNew,
       ),
     );
@@ -43,11 +43,11 @@ class TaskScreenWrapper extends StatelessWidget {
 
 class _TaskScreenBody extends StatelessWidget {
   const _TaskScreenBody({
-    required this.taskEntity,
+    required this.task,
     required this.isNew,
   });
 
-  final TaskEntity? taskEntity;
+  final Task? task;
   final bool isNew;
 
   @override

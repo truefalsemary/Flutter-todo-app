@@ -15,32 +15,16 @@
 
 part of 'tasks_bloc.dart';
 
-// sealed class AllTasksState extends Equatable {
-//   const AllTasksState();
-// }
-//
-// final class TasksInitial extends AllTasksState {
-//   const TasksInitial();
-//
-//   @override
-//   List<Object?> get props => [];
-// }
-//
-// final class TasksInProgress extends AllTasksState {
-//   @override
-//   List<Object?> get props => [];
-// }
-
 final class AllTasksState {
   const AllTasksState({
     this.cachedTasks,
     this.showCompleted = true,
-    this.revision,
+    this.revision = 0,
   });
 
   final List<TaskEntity>? cachedTasks;
   final bool showCompleted;
-  final int? revision;
+  final int revision;
 
   AllTasksState copyWith({
     List<TaskEntity>? cachedTasks,

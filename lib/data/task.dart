@@ -26,16 +26,6 @@ class Task extends Equatable {
     );
   }
 
-  // factory Task.fromTaskEntity(TaskEntity entity) {
-  //   return Task(
-  //     id: entity.id,
-  //     text: entity.text,
-  //     importance: Importance.fromString(entity.importance),
-  //     done: entity.done,
-  //     deadline: entity.deadline,
-  //   );
-  // }
-
   Task copyWith({
     String? description,
     Importance? priority,
