@@ -118,16 +118,21 @@ class TasksBloc extends HydratedBloc<ManyTasksEvent, AllTasksState> {
 
       if (index != -1) {
         newTodos[index] = newTask;
+        final revision =
+            (await _repo.addTodo(todo: newTask, revision: state.revision))
+                .revision;
+        await _updateRevision(revision, emit);
       } else {
         newTodos.add(newTask);
+        final revision =
+            (await _repo.updateTodo(todo: newTask, revision: state.revision))
+                .revision;
+        await _updateRevision(revision, emit);
       }
 
       emit(state.copyWith(cachedTasks: newTodos));
 
-      final revision =
-          (await _repo.addTodo(todo: newTask, revision: state.revision))
-              .revision;
-      await _updateRevision(revision, emit);
+
 
       _logger.fine(() => '_onSaveOneTask: ${event.task}');
     }

@@ -9,13 +9,68 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'data/importance_enum.dart';
 import 'data/repo/network_repo.dart';
+import 'data/task_entity.dart';
 import 'domain/tasks_bloc/tasks_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setUp();
-  runApp(const MyApp());
+
+  final repo = DioRepo();
+
+  const revision = 97;
+  const add = false;
+  const update = true;
+
+  if (add) {
+    repo.addTodo(
+      todo: TaskEntity(
+        id: '${revision+1}',
+        text: 'text',
+        importance: Importance.basic,
+        createdAt: DateTime.now(),
+        changedAt: DateTime.now(),
+        lastUpdatedBy: 'macbook',
+      ),
+      revision: revision,
+    );
+  }
+
+  if (update) {
+    repo.updateTodos(
+      tasks: [
+        TaskEntity(
+          id: '${revision*1000+1}',
+          text: 'text',
+          importance: Importance.basic,
+          createdAt: DateTime(2023, 2, 1),
+          changedAt: DateTime(2023, 3, 1),
+          lastUpdatedBy: 'macbook',
+        ),
+        TaskEntity(
+          id: '${revision*1000+2}',
+          text: 'text',
+          importance: Importance.basic,
+          createdAt: DateTime(2023, 1, 1),
+          changedAt: DateTime(2023, 2, 1),
+          lastUpdatedBy: 'macbook',
+        ),
+        TaskEntity(
+          id: '${revision*1000+3}',
+          text: 'text',
+          importance: Importance.basic,
+          createdAt: DateTime(2023, 1, 1),
+          changedAt: DateTime(2023, 6, 1),
+          lastUpdatedBy: 'macbook',
+        ),
+      ],
+      revision: revision,
+    );
+  }
+
+  // await setUp();
+  // runApp(const MyApp());
 }
 
 Future<void> setUp() async {
