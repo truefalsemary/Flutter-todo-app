@@ -72,7 +72,11 @@ class TasksBloc extends HydratedBloc<ManyTasksEvent, AllTasksState> {
       emit(state.copyWith(cachedTasks: todos));
       _logger.fine(() => '_onDeleteOneTask: ${event.id}');
     }
-    final revision = (await _repo.deleteTodo(event.id)).revision;
+    final revision = (await _repo.deleteTodo(
+      event.id,
+      revision: state.revision,
+    ))
+        .revision;
     await _updateRevision(revision, emit);
   }
 
@@ -80,6 +84,7 @@ class TasksBloc extends HydratedBloc<ManyTasksEvent, AllTasksState> {
       int? revision, Emitter<AllTasksState> emit) async {
     if (revision != null) {
       emit(state.copyWith(revision: revision));
+      _logger.fine(() => 'update revision');
     }
   }
 
@@ -113,9 +118,12 @@ class TasksBloc extends HydratedBloc<ManyTasksEvent, AllTasksState> {
 
       if (index != -1) {
         newTodos[index] = newTask;
+      } else {
+        newTodos.add(newTask);
       }
 
       emit(state.copyWith(cachedTasks: newTodos));
+
       final revision =
           (await _repo.addTodo(todo: newTask, revision: state.revision))
               .revision;

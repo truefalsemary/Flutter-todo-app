@@ -31,11 +31,11 @@ class MockTasksRepo extends TasksRepo {
   );
 
   @override
-  FutureOr<({int? revision})> deleteTodo(String id) {
+  FutureOr<({int? revision})> deleteTodo(String id, {int? revision}) {
     todos = todos.where((todo) => todo.id != id).toList();
     _logger.fine('delete todo $id');
-    revision += 1;
-    return (revision: revision);
+    this.revision += 1;
+    return (revision: this.revision);
   }
 
   @override

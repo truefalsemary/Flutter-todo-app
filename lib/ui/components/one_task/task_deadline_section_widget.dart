@@ -10,9 +10,10 @@ class _DeadlineSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Сделать до',
+            Text(
+              context.appLn.deadlineText,
               style: AppFonts.b2,
             ),
             Text(
@@ -47,13 +48,6 @@ class _DeadlineSection extends StatelessWidget {
       ],
     );
   }
-
-// String? formatDate(DateTime? dateTime) {
-//   if (dateTime != null) {
-//     return DateFormat('dd MMMM yyyy').format(dateTime);
-//   }
-//   return null;
-// }
 }
 
 class _DeleteSection extends StatelessWidget {
@@ -72,7 +66,7 @@ class _DeleteSection extends StatelessWidget {
         child: TextButton.icon(
             onPressed: () => _deleteTask(context),
             label: Text(
-              'Удалить',
+              context.appLn.deleteButton,
               style: TextStyle(color: context.appColorsTheme.colorRed),
             ),
             icon: Icon(

@@ -8,7 +8,7 @@ class _PrioritySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Важность', style: AppFonts.b2),
+        Text(context.appLn.priorityText, style: AppFonts.b2),
         DropdownButton<Importance>(
           dropdownColor: context.appColorsTheme.backPrimary,
           iconSize: 0.0,
@@ -19,14 +19,14 @@ class _PrioritySection extends StatelessWidget {
               return DropdownMenuItem<Importance>(
                 value: value,
                 child: Text(
-                  value.parseToString(),
+                  value.parseToString(context),
                   style: TextStyle(color: context.appColorsTheme.colorRed),
                 ),
               );
             }
             return DropdownMenuItem<Importance>(
               value: value,
-              child: Text(value.parseToString()),
+              child: Text(value.parseToString(context)),
             );
           }).toList(),
           onChanged: (priority) =>

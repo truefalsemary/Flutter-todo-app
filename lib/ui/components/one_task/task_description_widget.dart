@@ -31,7 +31,7 @@ class _DescriptionTextField extends StatelessWidget {
           border: const OutlineInputBorder(
             borderSide: BorderSide(style: BorderStyle.none),
           ),
-          hintText: 'Что надо сделать...',
+          hintText: context.appLn.deskHintText,
           hintStyle: AppFonts.b2.copyWith(
             color: context.appColorsTheme.labelTertiary,
           ),

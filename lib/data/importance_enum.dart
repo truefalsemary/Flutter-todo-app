@@ -1,16 +1,20 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_todo_app/utils/app_localization_context_ext.dart';
+
 enum Importance {
   low,
   basic,
   important;
 
-  parseToString() {
+  parseToString([BuildContext? context]) {
+    final appLn = context?.appLn;
     switch (this) {
       case Importance.low:
-        return 'no';
+        return appLn == null ? 'no' : appLn.importanceNo;
       case Importance.basic:
-        return 'low';
+        return appLn == null ? 'low' : appLn.importanceLow;
       case Importance.important:
-        return 'high';
+        return appLn == null ? 'high' : appLn.importanceHigh;
     }
   }
 

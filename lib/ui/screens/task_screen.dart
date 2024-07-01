@@ -4,6 +4,7 @@ import 'package:flutter_todo_app/ui/common/app_colors.dart';
 import 'package:flutter_todo_app/ui/common/app_fonts.dart';
 import 'package:flutter_todo_app/ui/components/app_material_wrapper.dart';
 import 'package:flutter_todo_app/utils/date_formatters.dart';
+import 'package:flutter_todo_app/utils/app_localization_context_ext.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/importance_enum.dart';
@@ -66,7 +67,7 @@ class _TaskScreenBody extends StatelessWidget {
                   foregroundColor: context.appColorsTheme.colorBlue,
                 ),
                 onPressed: () => _saveTask(context),
-                child: const Text('СОХРАНИТЬ'),
+                child: Text(context.appLn.saveButton),
               ),
             ]),
         body: Padding(

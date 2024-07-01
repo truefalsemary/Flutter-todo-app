@@ -54,8 +54,8 @@ class _MainScreenSliverPersistentHeaderDelegate
               Positioned(
                 bottom: 44 - 28 * shrinkCoef,
                 left: 60 - 44 * shrinkCoef,
-                child: const Text(
-                  'Мои дела',
+                child: Text(
+                  context.appLn.titleMainAppBar,
                   style: AppFonts.h1,
                 ),
               ),
@@ -106,7 +106,7 @@ class _MainScreenSliverPersistentHeaderDelegate
     final tasks = state.cachedTasks;
     if (tasks != null) {
       return Text(
-        'Выполнено — ${tasks.where((todo) => todo.done).length}',
+        '${context.appLn.doneSubAppBar} — ${tasks.where((todo) => todo.done).length}',
         style: AppFonts.b2.copyWith(
             color: context.appColorsTheme.labelTertiary.withOpacity(0.3)),
       );

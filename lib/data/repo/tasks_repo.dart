@@ -15,7 +15,7 @@ abstract class TasksRepo {
 
   FutureOr<({List<TaskEntity>? tasks, int? revision})> getAllTodos();
 
-  FutureOr<({int? revision})> deleteTodo(String id);
+  FutureOr<({int? revision})> deleteTodo(String id, {int? revision});
 
   FutureOr<({List<TaskEntity>? tasks, int? revision})> updateTodos({
     required List<TaskEntity> tasks,

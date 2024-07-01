@@ -8,7 +8,7 @@ import 'package:flutter_todo_app/ui/screens/task_screen.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'data/repo/network_repo.dart';
 import 'domain/tasks_bloc/tasks_bloc.dart';
 
@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
+          AppLocalizations.delegate,
         ],
         supportedLocales: const [
           Locale('en'), // English
