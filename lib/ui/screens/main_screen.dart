@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todo_app/data/task_entity.dart';
+import 'package:flutter_todo_app/data/importance_enum.dart';
 import 'package:flutter_todo_app/ui/common/app_colors.dart';
 import 'package:flutter_todo_app/ui/common/app_fonts.dart';
 import 'package:flutter_todo_app/ui/components/many_tasks/app_checkbox.dart';
 import 'package:flutter_todo_app/ui/components/app_material_wrapper.dart';
+import 'package:flutter_todo_app/utils/app_localization_context_ext.dart';
 
+import '../../data/task.dart';
 import '../../domain/tasks_bloc/tasks_bloc.dart';
 import 'task_screen.dart';
 import 'dart:math' as math;
@@ -26,7 +28,7 @@ class MainScreen extends StatelessWidget {
     return BlocBuilder<TasksBloc, AllTasksState>(
         builder: (BuildContext context, AllTasksState state) {
       return Scaffold(
-        backgroundColor: context.appColors.backPrimary,
+        backgroundColor: context.appColorsTheme.backPrimary,
         body: CustomScrollView(
           slivers: [
             SliverPersistentHeader(

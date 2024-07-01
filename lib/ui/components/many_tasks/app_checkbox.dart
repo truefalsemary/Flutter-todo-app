@@ -20,24 +20,24 @@ class AppCheckbox extends StatelessWidget {
       onChanged: onChanged,
       side: BorderSide(
         color: isCritical
-            ? context.appColors.colorRed
-            : context.appColors.supportSeparator,
+            ? context.appColorsTheme.colorRed
+            : context.appColorsTheme.supportSeparator,
         width: 2.0,
       ),
-      checkColor: context.appColors.backPrimary,
+      checkColor: context.appColorsTheme.backPrimary,
       fillColor: WidgetStateProperty.resolveWith<Color>((states) {
         if (states.contains(WidgetState.selected)) {
           return isCritical
-              ? context.appColors.colorRed
-              : context.appColors.colorGreen;
+              ? context.appColorsTheme.colorRed
+              : context.appColorsTheme.colorGreen;
         }
         if (states.contains(WidgetState.disabled)) {
-          return context.appColors.labelTertiary;
+          return context.appColorsTheme.labelTertiary;
         }
 
         return isCritical
-            ? context.appColors.colorRed.withOpacity(0.4)
-            : context.appColors.colorWhite;
+            ? context.appColorsTheme.colorRed.withOpacity(0.4)
+            : context.appColorsTheme.colorWhite;
       }),
     );
   }

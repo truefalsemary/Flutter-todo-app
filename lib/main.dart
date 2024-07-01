@@ -1,15 +1,80 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_todo_app/ui/common/app_colors.dart';
 import 'package:flutter_todo_app/ui/screens/main_screen.dart';
 import 'package:flutter_todo_app/ui/screens/task_screen.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:logging/logging.dart';
-
-import 'data/tasks_repo.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'data/importance_enum.dart';
+import 'data/repo/network_repo.dart';
+import 'data/task_entity.dart';
 import 'domain/tasks_bloc/tasks_bloc.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final repo = DioRepo();
+
+  const revision = 97;
+  const add = false;
+  const update = true;
+
+  if (add) {
+    repo.addTodo(
+      todo: TaskEntity(
+        id: '${revision+1}',
+        text: 'text',
+        importance: Importance.basic,
+        createdAt: DateTime.now(),
+        changedAt: DateTime.now(),
+        lastUpdatedBy: 'macbook',
+      ),
+      revision: revision,
+    );
+  }
+
+  if (update) {
+    repo.updateTodos(
+      tasks: [
+        TaskEntity(
+          id: '${revision*1000+1}',
+          text: 'text',
+          importance: Importance.basic,
+          createdAt: DateTime(2023, 2, 1),
+          changedAt: DateTime(2023, 3, 1),
+          lastUpdatedBy: 'macbook',
+        ),
+        TaskEntity(
+          id: '${revision*1000+2}',
+          text: 'text',
+          importance: Importance.basic,
+          createdAt: DateTime(2023, 1, 1),
+          changedAt: DateTime(2023, 2, 1),
+          lastUpdatedBy: 'macbook',
+        ),
+        TaskEntity(
+          id: '${revision*1000+3}',
+          text: 'text',
+          importance: Importance.basic,
+          createdAt: DateTime(2023, 1, 1),
+          changedAt: DateTime(2023, 6, 1),
+          lastUpdatedBy: 'macbook',
+        ),
+      ],
+      revision: revision,
+    );
+  }
+
+  // await setUp();
+  // runApp(const MyApp());
+}
+
+Future<void> setUp() async {
+  // Инициализация логеров и установка их работы в дебаг режиме
   Logger.root.level = kDebugMode ? Level.ALL : Level.OFF;
   Logger.root.onRecord.listen((record) {
     if (kDebugMode) {
@@ -17,17 +82,21 @@ void main() {
     }
   });
 
-  runApp(const MyApp());
+  // Создание локального хранилища
+  final appDir = await getApplicationDocumentsDirectory();
+  final storage = await HydratedStorage.build(
+    storageDirectory: appDir,
+  );
+  HydratedBloc.storage = storage;
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BlocProvider<TasksBloc>(
-      create: (_) => TasksBloc(MockTasksRepo())..add(const AllTasksLoaded()),
+      create: (_) => TasksBloc(DioRepo())..add(const AllTasksLoaded()),
       child: MaterialApp(
         initialRoute: MainScreen.routeName,
         routes: {
@@ -35,6 +104,16 @@ class MyApp extends StatelessWidget {
           TaskScreenWrapper.routeName: (context) => const TaskScreenWrapper(),
         },
         title: 'Flutter Demo',
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          AppLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'), // English
+          Locale('ru'), // Russian
+        ],
         theme: ThemeData.light(useMaterial3: true).copyWith(
           // TODO(TrueFalseMary): подумать как лучше сделать тему с учетом критических заметок
           checkboxTheme: const CheckboxThemeData(),

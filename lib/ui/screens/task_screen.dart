@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_app/data/task_entity.dart';
+import 'package:flutter_todo_app/data/task.dart';
 import 'package:flutter_todo_app/ui/common/app_colors.dart';
 import 'package:flutter_todo_app/ui/common/app_fonts.dart';
 import 'package:flutter_todo_app/ui/components/app_material_wrapper.dart';
 import 'package:flutter_todo_app/utils/date_formatters.dart';
+import 'package:flutter_todo_app/utils/app_localization_context_ext.dart';
 import 'package:provider/provider.dart';
 
+import '../../data/importance_enum.dart';
 import '../../domain/task_notifier/task_notifier.dart';
 import '../../domain/tasks_bloc/tasks_bloc.dart';
 
@@ -22,23 +26,18 @@ class TaskScreenWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final todo = ModalRoute.of(context)!.settings.arguments as TaskEntity?;
+    final todo = ModalRoute.of(context)!.settings.arguments as Task?;
     final isNew = todo == null;
 
     return ChangeNotifierProvider<OneTaskNotifier>(
       create: (_) {
-        final manyState = context.read<TasksBloc>().state;
-
         if (todo != null) {
-          return OneTaskNotifier(id: todo.id, todo: todo);
+          return OneTaskNotifier(todo: todo);
         }
-        if (manyState is TasksSuccess) {
-          return OneTaskNotifier(id: manyState.tasks.length);
-        }
-        return OneTaskNotifier(id: 0);
+        return OneTaskNotifier();
       },
       child: _TaskScreenBody(
-        taskEntity: todo,
+        task: todo,
         isNew: isNew,
       ),
     );
@@ -47,19 +46,19 @@ class TaskScreenWrapper extends StatelessWidget {
 
 class _TaskScreenBody extends StatelessWidget {
   const _TaskScreenBody({
-    required this.taskEntity,
+    required this.task,
     required this.isNew,
   });
 
-  final TaskEntity? taskEntity;
+  final Task? task;
   final bool isNew;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: context.appColors.backPrimary,
+        backgroundColor: context.appColorsTheme.backPrimary,
         appBar: AppBar(
-            backgroundColor: context.appColors.backPrimary,
+            backgroundColor: context.appColorsTheme.backPrimary,
             leading: AppMaterialWrapper(
                 child: IconButton(
                     onPressed: () => Navigator.maybePop(context),
@@ -67,10 +66,10 @@ class _TaskScreenBody extends StatelessWidget {
             actions: [
               TextButton(
                 style: TextButton.styleFrom(
-                  foregroundColor: context.appColors.colorBlue,
+                  foregroundColor: context.appColorsTheme.colorBlue,
                 ),
                 onPressed: () => _saveTask(context),
-                child: const Text('СОХРАНИТЬ'),
+                child: Text(context.appLn.saveButton),
               ),
             ]),
         body: Padding(
@@ -80,10 +79,10 @@ class _TaskScreenBody extends StatelessWidget {
               const _DescriptionTextField(),
               const SizedBox(height: 28),
               const _PrioritySection(),
-              Divider(color: context.appColors.supportSeparator),
+              Divider(color: context.appColorsTheme.supportSeparator),
               const _DeadlineSection(),
               const SizedBox(height: 24),
-              Divider(color: context.appColors.supportSeparator),
+              Divider(color: context.appColorsTheme.supportSeparator),
               _DeleteSection(isNew: isNew),
             ],
           ),

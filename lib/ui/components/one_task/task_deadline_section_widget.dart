@@ -10,21 +10,24 @@ class _DeadlineSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Сделать до',
+            Text(
+              context.appLn.deadlineText,
               style: AppFonts.b2,
             ),
             Text(
               DateFormatters.formatDate(
-                      context.watch<OneTaskNotifier>().todo.deadline) ??
+                    context.watch<OneTaskNotifier>().todo.deadline,
+                    Platform.localeName,
+                  ) ??
                   '',
-              style: TextStyle(color: context.appColors.colorBlue),
+              style: TextStyle(color: context.appColorsTheme.colorBlue),
             ),
           ],
         ),
         Switch(
-            activeColor: context.appColors.colorBlue,
+            activeColor: context.appColorsTheme.colorBlue,
             value: context.watch<OneTaskNotifier>().todo.deadline != null,
             onChanged: (value) async {
               if (!value) {
@@ -47,13 +50,6 @@ class _DeadlineSection extends StatelessWidget {
       ],
     );
   }
-
-// String? formatDate(DateTime? dateTime) {
-//   if (dateTime != null) {
-//     return DateFormat('dd MMMM yyyy').format(dateTime);
-//   }
-//   return null;
-// }
 }
 
 class _DeleteSection extends StatelessWidget {
@@ -72,12 +68,12 @@ class _DeleteSection extends StatelessWidget {
         child: TextButton.icon(
             onPressed: () => _deleteTask(context),
             label: Text(
-              'Удалить',
-              style: TextStyle(color: context.appColors.colorRed),
+              context.appLn.deleteButton,
+              style: TextStyle(color: context.appColorsTheme.colorRed),
             ),
             icon: Icon(
               Icons.delete,
-              color: context.appColors.colorRed,
+              color: context.appColorsTheme.colorRed,
             )),
       ),
     );
@@ -86,7 +82,7 @@ class _DeleteSection extends StatelessWidget {
   void _deleteTask(BuildContext context) {
     context
         .read<TasksBloc>()
-        .add(OneTaskDeleted(context.read<OneTaskNotifier>().todo));
+        .add(OneTaskDeleted(context.read<OneTaskNotifier>().todo.id));
     Navigator.maybePop(context);
   }
 }

@@ -34,16 +34,16 @@ class _MainScreenSliverPersistentHeaderDelegate
       alignment: Alignment.bottomCenter,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: context.appColors.backPrimary,
+          color: context.appColorsTheme.backPrimary,
           boxShadow: [
             BoxShadow(
               offset: const Offset(0, 1),
-              color: context.appColors.supportOverlay.withOpacity(0.2),
+              color: context.appColorsTheme.supportOverlay.withOpacity(0.2),
               blurRadius: 10,
             ),
             BoxShadow(
               offset: const Offset(0, 4),
-              color: context.appColors.supportOverlay.withOpacity(0.12),
+              color: context.appColorsTheme.supportOverlay.withOpacity(0.12),
               blurRadius: 5,
             )
           ],
@@ -54,8 +54,8 @@ class _MainScreenSliverPersistentHeaderDelegate
               Positioned(
                 bottom: 44 - 28 * shrinkCoef,
                 left: 60 - 44 * shrinkCoef,
-                child: const Text(
-                  'Мои дела',
+                child: Text(
+                  context.appLn.titleMainAppBar,
                   style: AppFonts.h1,
                 ),
               ),
@@ -92,23 +92,25 @@ class _MainScreenSliverPersistentHeaderDelegate
 
   Widget _buildIconButton(BuildContext context) {
     return InkWell(
-      onTap: () => context
-          .read<TasksBloc>()
-          .add(AllTasksFilter(!(state as TasksSuccess).showCompleted)),
+      onTap: () {
+        context.read<TasksBloc>().add(const AllTasksFilter());
+      },
       child: Icon(
-        (state as TasksSuccess).showCompleted
-            ? Icons.visibility_off
-            : Icons.visibility,
-        color: context.appColors.colorBlue,
+        state.showCompleted ? Icons.visibility_off : Icons.visibility,
+        color: context.appColorsTheme.colorBlue,
       ),
     );
   }
 
   Widget _buildTasksCount(BuildContext context) {
-    return Text(
-      'Выполнено — ${(state as TasksSuccess).tasks.where((todo) => todo.isCompleted).length}',
-      style: AppFonts.b2
-          .copyWith(color: context.appColors.labelTertiary.withOpacity(0.3)),
-    );
+    final tasks = state.cachedTasks;
+    if (tasks != null) {
+      return Text(
+        '${context.appLn.doneSubAppBar} — ${tasks.where((todo) => todo.done).length}',
+        style: AppFonts.b2.copyWith(
+            color: context.appColorsTheme.labelTertiary.withOpacity(0.3)),
+      );
+    }
+    return const SizedBox.shrink();
   }
 }

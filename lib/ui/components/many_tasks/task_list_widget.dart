@@ -7,9 +7,8 @@ class _TaskListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (state is TasksSuccess) {
-      final successState = state as TasksSuccess;
-
+    final tasks = state.cachedTasks;
+    if (tasks != null) {
       return SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           sliver: DecoratedSliver(
@@ -20,12 +19,14 @@ class _TaskListWidget extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   offset: Offset.zero,
-                  color: context.appColors.supportOverlay.withOpacity(0.06),
+                  color:
+                      context.appColorsTheme.supportOverlay.withOpacity(0.06),
                   blurRadius: 2,
                 ),
                 BoxShadow(
                   offset: const Offset(0, 2),
-                  color: context.appColors.supportOverlay.withOpacity(0.12),
+                  color:
+                      context.appColorsTheme.supportOverlay.withOpacity(0.12),
                   blurRadius: 2,
                 )
               ],
@@ -34,13 +35,13 @@ class _TaskListWidget extends StatelessWidget {
               padding: const EdgeInsets.only(top: 4),
               sliver: Builder(
                 builder: (context) {
-                  final filteredTodos = successState.showCompleted
-                      ? successState.tasks
-                      : successState.tasks.where((todo) => !todo.isCompleted);
+                  final filteredTodos = state.showCompleted
+                      ? tasks
+                      : tasks.where((todo) => !todo.done);
                   return SliverList.builder(
                     itemCount: filteredTodos.length,
                     itemBuilder: (context, index) => _DismissibleTodoListTile(
-                      filteredTodos.elementAt(index),
+                      filteredTodos.elementAt(index).toTask(),
                     ),
                   );
                 },

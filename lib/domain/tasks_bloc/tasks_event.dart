@@ -12,36 +12,34 @@ final class AllTasksLoaded extends ManyTasksEvent {
 }
 
 final class SwitchTaskCompletition extends ManyTasksEvent {
-  const SwitchTaskCompletition(this.task);
+  const SwitchTaskCompletition(this.id);
 
-  final TaskEntity task;
+  final String id;
 
   @override
-  List<Object?> get props => [task];
+  List<Object?> get props => [id];
 }
 
 final class OneTaskDeleted extends ManyTasksEvent {
-  const OneTaskDeleted(this.task);
+  const OneTaskDeleted(this.id);
 
-  final TaskEntity task;
+  final String id;
 
   @override
-  List<Object?> get props => [task];
+  List<Object?> get props => [id];
 }
 
 final class AllTasksFilter extends ManyTasksEvent {
-  const AllTasksFilter(this.showCompleted);
-
-  final bool showCompleted;
+  const AllTasksFilter();
 
   @override
-  List<Object?> get props => [showCompleted];
+  List<Object?> get props => [];
 }
 
 final class OneTaskSaved extends ManyTasksEvent {
   const OneTaskSaved(this.task);
 
-  final TaskEntity task;
+  final Task task;
 
   @override
   List<Object?> get props => [task];

@@ -1,66 +1,118 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_todo_app/data/importance_enum.dart';
+import 'package:flutter_todo_app/data/task.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+import '../utils/json_converters.dart';
+
+part 'task_entity.g.dart';
+
+@JsonSerializable()
 class TaskEntity extends Equatable {
   const TaskEntity({
     required this.id,
-    required this.description,
-    required this.priority,
+    required this.text,
+    required this.importance,
     this.deadline,
-    this.isCompleted = false,
+    this.done = false,
+    this.color,
+    required this.createdAt,
+    required this.changedAt,
+    required this.lastUpdatedBy,
   });
 
-  final int id;
-  final String description;
-  final Priority priority;
-  final DateTime? deadline;
-  final bool isCompleted;
+  final String id;
+  final String text;
 
-  factory TaskEntity.empty(int id) {
-    return TaskEntity(
-      id: id,
-      description: '',
-      priority: Priority.low,
-    );
-  }
+  @ImportanceConverter()
+  final Importance importance;
+
+  @ColorJsonConverter()
+  final Color? color;
+
+  @EpochDateTimeConverter()
+  @JsonKey(name: 'created_at')
+  final DateTime createdAt;
+
+  @EpochDateTimeConverter()
+  @JsonKey(name: 'changed_at')
+  final DateTime changedAt;
+
+  @EpochDateTimeNullConverter()
+  final DateTime? deadline;
+
+  final bool done;
+
+  @JsonKey(name: 'last_updated_by')
+  final String lastUpdatedBy;
+
+  factory TaskEntity.fromTask(
+    Task task, {
+    required DateTime createdAt,
+    required DateTime changedAt,
+    required String lastUpdatedBy,
+  }) =>
+      TaskEntity(
+        id: task.id,
+        text: task.text,
+        importance: task.importance,
+        deadline: task.deadline,
+        done: task.done,
+        createdAt: createdAt,
+        changedAt: changedAt,
+        lastUpdatedBy: lastUpdatedBy,
+      );
+
+  factory TaskEntity.fromJson(Map<String, dynamic> json) =>
+      _$TaskEntityFromJson(json);
+
+  @override
+  List<Object?> get props => [
+        id,
+        text,
+        importance,
+        deadline,
+        done,
+        createdAt,
+        changedAt,
+        lastUpdatedBy,
+      ];
+
+  Map<String, dynamic> toJson() => _$TaskEntityToJson(this);
+
+  Task toTask() => Task(
+        id: id,
+        text: text,
+        importance: importance,
+        deadline: deadline,
+        done: done,
+      );
 
   TaskEntity copyWith({
-    String? description,
-    Priority? priority,
+    String? text,
+    Importance? importance,
     DateTime? deadline,
-    bool? isCompleted,
+    bool? done,
     bool? forceNullDeadline,
+    DateTime? createdAt,
+    DateTime? changedAt,
+    String? lastUpdatedBy,
   }) {
     return TaskEntity(
       id: id,
-      description: description ?? this.description,
-      priority: priority ?? this.priority,
+      text: text ?? this.text,
+      importance: importance ?? this.importance,
       deadline: (forceNullDeadline ?? false) ? null : deadline ?? this.deadline,
-      isCompleted: isCompleted ?? this.isCompleted,
+      done: done ?? this.done,
+      createdAt: createdAt ?? this.createdAt,
+      changedAt: changedAt ?? this.changedAt,
+      lastUpdatedBy: lastUpdatedBy ?? this.lastUpdatedBy,
     );
   }
 
   @override
   String toString() {
-    return 'Todo{id: $id, description: $description, priority: $priority, deadline: $deadline, isCompleted: $isCompleted}';
-  }
-
-  @override
-  List<Object?> get props => [id, description, priority, deadline, isCompleted];
-}
-
-enum Priority {
-  no,
-  low,
-  high;
-
-  parseToString() {
-    switch (this) {
-      case Priority.no:
-        return 'no';
-      case Priority.low:
-        return 'low';
-      case Priority.high:
-        return 'high';
-    }
+    return 'TaskEntity{id: $id, description: $text, priority: $importance, deadline: $deadline, isCompleted: $done}';
   }
 }

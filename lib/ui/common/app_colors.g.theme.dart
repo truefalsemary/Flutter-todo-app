@@ -189,6 +189,7 @@ mixin _$ThemeExtensionMixin on ThemeExtension<AppColorsTheme> {
   }
 }
 
-extension AppColorsBuildContext on BuildContext {
-  AppColorsTheme get appColors => Theme.of(this).extension<AppColorsTheme>()!;
+extension AppColorsThemeBuildContext on BuildContext {
+  AppColorsTheme get appColorsTheme =>
+      Theme.of(this).extension<AppColorsTheme>()!;
 }
