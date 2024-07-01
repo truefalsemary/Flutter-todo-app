@@ -18,7 +18,9 @@ class _DeadlineSection extends StatelessWidget {
             ),
             Text(
               DateFormatters.formatDate(
-                      context.watch<OneTaskNotifier>().todo.deadline) ??
+                    context.watch<OneTaskNotifier>().todo.deadline,
+                    Platform.localeName,
+                  ) ??
                   '',
               style: TextStyle(color: context.appColorsTheme.colorBlue),
             ),

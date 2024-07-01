@@ -37,7 +37,7 @@ class Task extends Equatable {
       id: id,
       text: description ?? text,
       importance: priority ?? importance,
-      deadline: (forceNullDeadline ?? false) ? null : deadline ?? deadline,
+      deadline: (forceNullDeadline ?? false) ? null : deadline ?? this.deadline,
       done: isCompleted ?? done,
     );
   }
