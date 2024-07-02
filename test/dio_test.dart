@@ -28,6 +28,24 @@ void main() {
     expect(response.revision, 26);
   });
 
+  test('Update new todo', () async {
+    final taskEntity = TaskEntity(
+      id: '19',
+      text: 'text',
+      importance: Importance.basic,
+      createdAt: DateTime.now(),
+      changedAt: DateTime.now(),
+      lastUpdatedBy: 'macbook',
+    );
+    // print(taskEntity.toJson());
+    final repo = DioRepo();
+    final response = await repo.updateTodo(
+      revision: 25,
+      todo: taskEntity,
+    );
+    expect(response.revision, 26);
+  });
+
   // TODO(TrueFalseMary): дописать тесты для всех эндпоинтов и постави
   // final repo = DioRepo();
   //
