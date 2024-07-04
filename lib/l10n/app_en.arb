@@ -1,0 +1,46 @@
+{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "saveButton": "SAVE",
+  "@saveButton": {
+    "description": "The text for save button"
+  },
+  "doneSubAppBar": "Done",
+  "@doneSubAppBar": {
+    "description": "The text for main sub appBar"
+  },
+  "titleMainAppBar": "My todos",
+  "@titleMainAppBar": {
+    "description": "The text for main appBar"
+  },
+  "deadlineText": "Do until",
+  "@deadlineText": {
+    "description": "The text for deadline section"
+  },
+  "priorityText": "Priority",
+  "@priorityText": {
+    "description": "The text for priority section"
+  },
+  "deleteButton": "Delete",
+  "@deleteButton": {
+    "description": "The text for delete button"
+  },
+  "deskHintText": "Something need to do...",
+  "@deskHintText": {
+    "description": "The hint text for todo text field"
+  },
+  "importanceHigh": "high",
+  "@importanceHigh": {
+    "description": "importance enum"
+  },
+  "importanceLow": "low",
+  "@importanceLow": {
+    "description": "importance enum"
+  },
+  "importanceNo": "no",
+  "@importanceNo": {
+    "description": "importance enum"
+  }
+}
